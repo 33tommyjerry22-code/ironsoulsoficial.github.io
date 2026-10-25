@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Iron Souls™</title>
+<style>
+@font-face{font-family:'MC';src:url('FONTS/MinecraftRegular.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'MC';src:url('FONTS/MinecraftBold.ttf') format('truetype');font-weight:700;font-display:swap}
+@font-face{font-family:'MC Title';src:url('FONTS/MinecraftBold.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'Minecraft Ten';src:local('Minecraft Ten'),url('FONTS/MinecraftTen.ttf') format('truetype');font-weight:400;font-display:swap}
+:root{color-scheme:dark;--bg:#0d0a1c;--panel:#181230;--ink:#f3e9d2;--muted:#b9aed0;--accent:#ff8a3c;--accent2:#ffd98a;--line:#5b3a82;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{overflow-anchor:none;scroll-behavior:smooth;scroll-padding-top:calc(100px + env(safe-area-inset-top,0px))}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse 80% 40% at 50% 0,rgba(255,138,60,.12),transparent 70%) no-repeat,var(--bg);color:var(--ink);font-family:'MC',system-ui,sans-serif;font-size:19px;line-height:1.5}
+h1,h2,h3{font-family:'Minecraft Ten','MC Title',monospace;font-weight:400;line-height:1.15;margin:0}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{border-bottom:4px solid var(--line);background:var(--panel);position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--panel);z-index:30}
+nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 20px;max-width:1080px;margin:0 auto;flex-wrap:wrap}
+.logo{font-family:'Minecraft Ten','MC Title',monospace;font-size:26px;text-decoration:none}
+nav ul{display:flex;gap:20px;list-style:none;margin:0;padding:0;font-weight:800}
+nav a{text-decoration:none}nav a:hover{color:var(--accent)}
+.btn{display:inline-block;background:var(--accent);color:#1b1f3a;font-weight:800;text-decoration:none;padding:12px 20px;border:3px solid var(--line);box-shadow:4px 4px 0 var(--line);cursor:pointer;font-family:inherit;font-size:1rem}
+.btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--line)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--accent2);outline-offset:2px}
+.hero{display:grid;grid-template-columns:1fr 1fr;border-bottom:4px solid var(--line)}
+.hero article{padding:56px 28px;min-height:360px;display:flex;flex-direction:column;justify-content:center;gap:18px;position:relative;overflow:hidden}
+.hero article:first-child{background:#2f7be0;color:#fff;border-right:4px solid var(--line)}
+.hero article:last-child{background:#e8892b;color:#1b1f3a}
+.hero h1{font-size:clamp(22px,4vw,34px)}
+.hero p{max-width:34ch;margin:0;font-size:1.1rem;font-weight:700}
+.hero article::after{content:"";position:absolute;right:-30px;bottom:-30px;width:140px;height:140px;background:rgba(255,255,255,.18);box-shadow:-70px 70px 0 rgba(255,255,255,.12)}
+.hero .btn{align-self:flex-start;background:#fff;color:#1b1f3a;border-color:#1b1f3a;box-shadow:4px 4px 0 #1b1f3a}
+section{padding:56px 0}
+h2{font-size:clamp(30px,4.4vw,42px);margin-bottom:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:20px}
+.card{background:var(--panel);border:3px solid var(--line);box-shadow:5px 5px 0 var(--line);display:flex;flex-direction:column}
+.thumb{aspect-ratio:1;border-bottom:3px solid var(--line);position:relative;background-size:32px 32px}
+.t1{background-color:#4c9a3f;background-image:linear-gradient(45deg,#3f8334 25%,transparent 25%,transparent 75%,#3f8334 75%),linear-gradient(45deg,#3f8334 25%,transparent 25%,transparent 75%,#3f8334 75%);background-position:0 0,16px 16px}
+.t2{background-color:#7b5a3a;background-image:linear-gradient(45deg,#68492d 25%,transparent 25%,transparent 75%,#68492d 75%),linear-gradient(45deg,#68492d 25%,transparent 25%,transparent 75%,#68492d 75%);background-position:0 0,16px 16px}
+.t3{background-color:#4a5fb8;background-image:linear-gradient(45deg,#3b4d9b 25%,transparent 25%,transparent 75%,#3b4d9b 75%),linear-gradient(45deg,#3b4d9b 25%,transparent 25%,transparent 75%,#3b4d9b 75%);background-position:0 0,16px 16px}
+.t4{background-color:#8d8d8d;background-image:linear-gradient(45deg,#777 25%,transparent 25%,transparent 75%,#777 75%),linear-gradient(45deg,#777 25%,transparent 25%,transparent 75%,#777 75%);background-position:0 0,16px 16px}
+.tag{position:absolute;top:10px;left:10px;background:var(--accent);color:#1b1f3a;font-weight:800;font-size:.8rem;padding:2px 8px;border:2px solid var(--line)}
+.body{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.body h3{font-size:11px}
+.body span{color:var(--muted);font-size:.9rem}
+.body a{margin-top:auto;font-weight:800;color:var(--accent2);padding-top:8px}
+.info{background:var(--panel);border-block:4px solid var(--line)}
+.info .wrap{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
+.partners{display:flex;gap:12px;flex-wrap:wrap}
+.partners b{border:3px solid var(--line);padding:8px 14px;background:var(--bg);font-family:'Minecraft Ten','MC Title',monospace;font-size:20px}
+.mascot{margin:0;display:flex;flex-direction:column;align-items:center;gap:26px}
+.mascot img{display:block;height:clamp(260px,36vw,380px);width:auto;max-width:100%;filter:drop-shadow(8px 8px 0 var(--line))}
+.info p{max-width:60ch;color:var(--muted)}
+form{display:grid;gap:16px;max-width:620px}
+label{display:grid;gap:6px;font-weight:800}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--panel);border:3px solid var(--line);padding:11px;width:100%}
+textarea{min-height:120px;resize:vertical}
+.check{display:flex;gap:10px;align-items:center;font-weight:400}
+.check input{width:20px;height:20px}
+#ok{display:none;border:3px solid var(--line);background:var(--accent2);color:#1b1f3a;padding:12px;font-weight:800}
+footer{background:var(--panel);border-top:4px solid var(--line);padding:40px 0}
+footer .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px}
+footer h3{font-size:24px;margin-bottom:10px}
+footer a{display:block;margin:4px 0}
+.copy{text-align:center;color:var(--muted);margin-top:28px;font-size:.9rem}
+@media(max-width:720px){.hero,.info .wrap{grid-template-columns:1fr}.hero article:first-child{border-right:0;border-bottom:4px solid var(--line)}}
+
+
+.slider{position:relative;border-bottom:4px solid var(--line);background:var(--bg)}
+.slider{overflow:hidden}
+.track{display:flex;transition:transform .9s cubic-bezier(.77,0,.18,1);touch-action:pan-y;cursor:grab;will-change:transform}
+.track.drag{transition:none;cursor:grabbing}
+.slide{flex:0 0 100%;position:relative;height:clamp(460px,78vh,680px);overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 max(20px,calc((100% - 1040px)/2));color:#fff}
+.slide .bg{position:absolute;inset:-30px;background-size:cover;background-position:center;filter:blur(22px) brightness(.55);transform:scale(1.3);transition:transform 7s ease-out}
+.slide.on .bg{transform:scale(1.1)}
+.slide .cap{position:relative;max-width:440px;display:flex;flex-direction:column;gap:18px;z-index:1}
+.slide h1{font-size:clamp(36px,6vw,60px);text-shadow:4px 4px 0 #1b1f3a}
+.slide p{margin:0;font-size:1.15rem;font-weight:700}
+.slide .btn{align-self:flex-start;background:#fff;color:#1b1f3a;border-color:#1b1f3a;box-shadow:4px 4px 0 #1b1f3a}
+.slide .pic{position:relative;z-index:1;height:calc(100% - 56px);aspect-ratio:9/16;border:4px solid #fff;box-shadow:8px 8px 0 #1b1f3a;object-fit:cover;background:#000}
+.arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:48px;height:48px;border:3px solid #1b1f3a;background:var(--accent);color:#1b1f3a;font:800 22px 'MC',sans-serif;cursor:pointer;box-shadow:3px 3px 0 #1b1f3a}
+.arrow:hover{background:#fff}
+.arrow.prev{left:10px}.arrow.next{right:10px}
+.dots{position:absolute;left:0;right:0;bottom:14px;display:flex;justify-content:center;gap:10px;z-index:3}
+.dots button{width:18px;height:18px;border:3px solid #fff;background:transparent;cursor:pointer;padding:0}
+.dots button[aria-current="true"]{background:var(--accent)}
+@media(max-width:720px){.slide{flex-direction:column-reverse;justify-content:center;gap:16px;padding:20px 20px 52px;text-align:center}.slide .cap{align-items:center}.slide .btn{align-self:center}.slide .pic{height:auto;max-height:52%;width:auto;aspect-ratio:9/16}.arrow{top:40%;width:40px;height:40px}}
+
+.slide .cap>*{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+.slide .pic{opacity:0;transform:translateX(60px) scale(.92);transition:opacity .7s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.slide.on .cap>*{opacity:1;transform:none}
+.slide.on .cap>:nth-child(1){transition-delay:.35s}
+.slide.on .cap>:nth-child(2){transition-delay:.5s}
+.slide.on .cap>:nth-child(3){transition-delay:.65s}
+.slide.on .pic{opacity:1;transform:none;transition-delay:.3s}
+.arrow{transition:transform .15s,background .15s}
+.arrow:active{transform:translateY(-50%) scale(.9)}
+.arrow.next:hover{transform:translateY(-50%) translateX(3px)}
+.arrow.prev:hover{transform:translateY(-50%) translateX(-3px)}
+.dots button{transition:background .3s,transform .3s}
+.dots button[aria-current="true"]{transform:scale(1.25)}
+.progress{position:absolute;left:0;bottom:0;height:5px;background:var(--accent);width:0;z-index:3}
+.progress.run{width:100%;transition:width 5s linear}
+@media(prefers-reduced-motion:reduce){.slide .bg{transition:none;transform:scale(1.1)}}
+.pausebtn{position:absolute;right:12px;bottom:12px;z-index:3;width:36px;height:36px;border:3px solid #1b1f3a;background:#fff;color:#1b1f3a;font:800 13px 'MC',sans-serif;cursor:pointer;box-shadow:3px 3px 0 #1b1f3a}
+
+.sp{position:absolute;left:0;bottom:-4px;height:4px;width:100%;background:var(--accent2);transform:scaleX(0);transform-origin:left}
+nav ul a{position:relative;padding:4px 0;background:linear-gradient(var(--accent),var(--accent)) left bottom/0 3px no-repeat;transition:background-size .3s cubic-bezier(.2,.8,.2,1),color .2s}
+nav ul a:hover,nav ul a.act{background-size:100% 3px;color:var(--ink)}
+.btn{position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s}
+.btn::after{content:"";position:absolute;top:0;left:-70%;width:50%;height:100%;background:rgba(255,255,255,.55);transform:skewX(-20deg);transition:left .5s}
+.btn:hover::after{left:130%}
+.btn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--line)}
+.btn.alt{background:var(--panel);color:var(--ink)}
+.btn.light{background:#f6ecd6;color:#1b1f3a;border-color:#0d0a1c;box-shadow:4px 4px 0 rgba(0,0,0,.55)}
+.btn.dark{background:#1b1f3a;color:#fff;border-color:#1b1f3a;box-shadow:4px 4px 0 #fff}
+.row{display:flex;gap:14px;flex-wrap:wrap}
+.band{padding:84px 0}
+.rv{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+.pack{display:grid;grid-template-columns:5fr 6fr;background:var(--panel);border:4px solid var(--line);box-shadow:8px 8px 0 var(--line)}
+.art{position:relative;min-height:380px;overflow:hidden;background:linear-gradient(#150f2a 0%,#4a1530 55%,#e8892b 100%);border-right:4px solid var(--line);transform-style:preserve-3d;transition:transform .2s ease-out;will-change:transform}
+.moon{position:absolute;top:44px;right:48px;width:64px;height:64px;background:#ffe9b8;box-shadow:0 0 0 10px rgba(255,233,184,.18),0 0 60px 20px rgba(255,200,120,.35)}
+.castle{position:absolute;left:0;right:0;bottom:0;height:46%;background:#0d0a1c;clip-path:polygon(0 100%,0 62%,8% 62%,8% 40%,14% 40%,14% 62%,26% 62%,26% 22%,31% 22%,31% 10%,36% 10%,36% 22%,41% 22%,41% 62%,56% 62%,56% 34%,62% 34%,62% 62%,74% 62%,74% 28%,79% 28%,79% 14%,84% 14%,84% 28%,89% 28%,89% 56%,100% 56%,100% 100%)}
+.art i{position:absolute;bottom:-10px;left:var(--x);width:6px;height:6px;background:#ffb347;box-shadow:0 0 8px #ff8a3c;animation:ember 5s linear var(--d) infinite}
+@keyframes ember{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translate(18px,-340px);opacity:0}}
+.pinfo{padding:34px;display:flex;flex-direction:column;gap:18px}
+.pinfo h3{font-size:clamp(30px,4vw,42px)}
+.pinfo p{margin:0;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.chips li{border:2px solid var(--line);padding:3px 10px;font-weight:800;font-size:.9rem;background:var(--bg);transition:transform .2s,background .2s}
+.chips li:hover{transform:translateY(-3px);background:var(--accent)}
+.specs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0}
+.specs div{border:3px solid var(--line);padding:10px;background:var(--bg)}
+.specs dt{font-size:.8rem;color:var(--muted);font-weight:700}
+.specs dd{margin:2px 0 0;font-weight:800}
+.split{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center}
+.split.rev{grid-template-columns:1fr 1.3fr}.split.rev>:first-child{order:2}
+.split h2{font-size:clamp(40px,7vw,64px);margin-bottom:18px}
+.split p{font-size:1.2rem;font-weight:700;margin:0 0 26px;max-width:42ch}
+.ico{display:flex;justify-content:center}
+.ico svg{width:min(240px,60vw);height:auto;filter:drop-shadow(8px 8px 0 rgba(0,0,0,.28));animation:float 4s ease-in-out infinite;transition:transform .3s}
+.ico svg:hover{transform:scale(1.1) rotate(-4deg)}
+@keyframes float{50%{translate:0 -12px}}
+.yt{background:linear-gradient(135deg,#4a0f1e,#8c1d33);color:#f6ecd6}.pat{background:linear-gradient(135deg,#5e280c,#b9540f);color:#f6ecd6}.dc{background:linear-gradient(135deg,#1c1850,#3a2f94);color:#f6ecd6}
+.yt,.pat,.dc{border-top:4px solid var(--line)}
+.ico{color:#ffd98a}
+@media(max-width:720px){.pack,.split,.split.rev{grid-template-columns:1fr}.split.rev>:first-child{order:0}.art{min-height:260px;border-right:0;border-bottom:4px solid var(--line)}.specs{grid-template-columns:1fr}nav ul{gap:8px 14px;font-size:.85rem;flex-wrap:wrap}nav{padding:10px 16px}.band{padding:60px 0}}
+.slide .pic.sq{aspect-ratio:1/1;height:auto;width:min(440px,46vw)}
+@media(max-width:720px){.slide .pic.sq{width:min(52vw,240px);max-height:none}.slide .pic{height:auto;width:min(34vw,170px);max-height:none}}
+.logo img{display:block;height:66px;width:auto;transition:transform .3s cubic-bezier(.2,.8,.2,1),filter .3s}
+.logo:hover img{transform:scale(1.08) rotate(-2deg);filter:drop-shadow(0 0 10px rgba(255,138,60,.6))}
+
+header{border-bottom-width:6px}
+.sp{bottom:-6px;height:6px}
+nav{padding:14px 28px;transition:padding .35s cubic-bezier(.2,.8,.2,1)}
+.logo img{height:112px;transition:height .35s cubic-bezier(.2,.8,.2,1),transform .3s cubic-bezier(.2,.8,.2,1),filter .3s}
+nav ul{gap:12px 32px;font-size:27px;transition:font-size .35s}
+nav ul a{background-size:0 4px}
+nav ul a:hover,nav ul a.act{background-size:100% 4px}
+header.small nav{padding:8px 28px}
+header.small .logo img{height:62px}
+header.small nav ul{font-size:22px}
+@media(max-width:720px){nav{padding:10px 16px}.logo img{height:76px}nav ul{gap:6px 16px;font-size:20px}header.small nav{padding:6px 16px}header.small .logo img{height:50px}header.small nav ul{font-size:18px}}
+/* ===== Detalles dorados: esquinas y rebordes con brillo sutil ===== */
+:root{--gold:#e2b04b;--gold-hi:#fff6cf;
+--ctl:linear-gradient(#000,#000) top left/18px 4px no-repeat,linear-gradient(#000,#000) top left/4px 18px no-repeat,linear-gradient(#000,#000) top 9px left 9px/4px 4px no-repeat;
+--ctr:linear-gradient(#000,#000) top right/18px 4px no-repeat,linear-gradient(#000,#000) top right/4px 18px no-repeat,linear-gradient(#000,#000) top 9px right 9px/4px 4px no-repeat;
+--cbl:linear-gradient(#000,#000) bottom left/18px 4px no-repeat,linear-gradient(#000,#000) bottom left/4px 18px no-repeat,linear-gradient(#000,#000) bottom 9px left 9px/4px 4px no-repeat;
+--cbr:linear-gradient(#000,#000) bottom right/18px 4px no-repeat,linear-gradient(#000,#000) bottom right/4px 18px no-repeat,linear-gradient(#000,#000) bottom 9px right 9px/4px 4px no-repeat}
+.pack,.info,footer,.yt,.pat,.dc,.wiki{position:relative}
+.pack::before,.pack::after,header::before,header::after,footer::before,footer::after,.info::before,.info::after,.yt::before,.pat::before,.dc::before,.wiki::before{content:"";position:absolute;pointer-events:none;opacity:.95;background:linear-gradient(105deg,var(--gold) 0 44%,var(--gold-hi) 50%,var(--gold) 56% 100%) 100% 0/300% 100%;animation:gilt 9s ease-in-out var(--gd,0s) infinite}
+header::after{left:0;right:0;bottom:0;height:2px;z-index:2;--gd:1.8s}
+footer::before,.info::before,.yt::before,.pat::before,.dc::before,.wiki::before{left:0;right:0;top:0;height:2px}
+.info::after{left:0;right:0;bottom:0;height:2px;--gd:2.4s}
+.info::before{--gd:2.4s}.yt::before{--gd:3.6s}.pat::before{--gd:4.2s}.dc::before{--gd:4.8s}.wiki::before{--gd:5.4s}footer::before{--gd:6s}
+.pack::before{inset:7px 7px auto;height:26px;z-index:3;-webkit-mask:var(--ctl),var(--ctr);mask:var(--ctl),var(--ctr)}
+.pack::after{inset:auto 7px 7px;height:26px;z-index:3;--gd:.9s;-webkit-mask:var(--cbl),var(--cbr);mask:var(--cbl),var(--cbr)}
+header::before{inset:7px 8px auto;height:26px;z-index:2;--gd:.6s;-webkit-mask:var(--ctl),var(--ctr);mask:var(--ctl),var(--ctr)}
+footer::after{inset:auto 8px 8px;height:26px;--gd:6.6s;-webkit-mask:var(--cbl),var(--cbr);mask:var(--cbl),var(--cbr)}
+@keyframes gilt{0%{background-position:100% 0}26%,100%{background-position:0 0}}
+@media(prefers-reduced-motion:reduce){.pack::before,.pack::after,header::before,header::after,footer::before,footer::after,.info::before,.info::after,.yt::before,.pat::before,.dc::before,.wiki::before{animation:none}}
+
+/* ===== Menú desplegable ===== */
+.menubtn{display:flex;align-items:center;gap:14px;font-family:'Minecraft Ten','MC Title',monospace;font-size:24px;line-height:1;color:var(--ink);background:var(--bg);border:4px solid var(--line);padding:11px 18px;cursor:pointer;box-shadow:4px 4px 0 var(--line);transition:transform .15s,box-shadow .15s,background .25s,border-color .25s}
+.menubtn:hover{border-color:var(--gold);transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--line)}
+.menubtn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--line)}
+header.open .menubtn{border-color:var(--gold);background:var(--panel)}
+header.small .menubtn{font-size:19px;padding:8px 14px}
+.bars{position:relative;display:block;width:26px;height:20px}
+.bars i{position:absolute;left:0;top:0;width:100%;height:4px;background:currentColor;will-change:transform;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .15s}
+.bars i:nth-child(2){transform:translateY(8px)}
+.bars i:nth-child(3){transform:translateY(16px)}
+header.open .bars i:nth-child(1){transform:translateY(8px) rotate(45deg)}
+header.open .bars i:nth-child(2){opacity:0;transform:translateY(8px) scaleX(0)}
+header.open .bars i:nth-child(3){transform:translateY(8px) rotate(-45deg)}
+.drop{position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--panel);border-bottom:4px solid var(--line);contain:layout paint;visibility:hidden;opacity:0;transform:scaleY(.02);transform-origin:50% 0;will-change:transform,opacity;transition:transform .3s cubic-bezier(.4,0,.2,1),opacity .2s ease,visibility 0s .3s}
+header.open .drop{visibility:visible;opacity:1;transform:none;transition:transform .42s cubic-bezier(.16,1,.3,1),opacity .15s ease,visibility 0s}
+.drop::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;pointer-events:none;background:linear-gradient(105deg,var(--gold) 0 44%,var(--gold-hi) 50%,var(--gold) 56% 100%) 100% 0/300% 100%;animation:gilt 9s ease-in-out 3s infinite}
+.dropin{max-height:calc(100vh - 140px);max-height:calc(100dvh - 140px);overflow-y:auto;overscroll-behavior:contain}
+.drop ul{list-style:none;margin:0 auto;padding:26px 28px 34px;max-width:1080px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.drop li{opacity:0;transform:translateY(-14px);will-change:transform,opacity;transition:opacity .15s,transform .15s}
+header.open .drop li{opacity:1;transform:none;transition:opacity .4s ease-out,transform .5s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i)*26ms + 30ms)}
+.drop a{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:4px;padding:16px 18px;text-decoration:none;background:var(--bg);border:3px solid var(--line);box-shadow:4px 4px 0 var(--line);transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s,border-color .2s,background .2s}
+.drop a em{font-style:normal;font-family:'Minecraft Ten','MC Title',monospace;font-size:13px;color:var(--gold);letter-spacing:.12em}
+.drop a b{font-family:'Minecraft Ten','MC Title',monospace;font-weight:400;font-size:26px;line-height:1.1;color:var(--ink)}
+.drop a small{color:var(--muted);font-size:.85rem}
+.drop a::after{content:"";position:absolute;top:0;left:0;width:45%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,246,207,.3),transparent);transform:translateX(-170%) skewX(-20deg);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.drop a:hover,.drop a:focus-visible{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--line);border-color:var(--gold);background:#1d1638}
+.drop a:hover::after,.drop a:focus-visible::after{transform:translateX(280%) skewX(-20deg)}
+.drop a.act{border-color:var(--gold)}
+.drop a.act em::after{content:" ◆"}
+.drop .new{position:absolute;top:12px;right:12px;background:var(--gold);color:#1b1f3a;font-weight:800;font-size:.7rem;padding:2px 7px;border:2px solid #1b1f3a}
+.scrim{position:fixed;inset:0;z-index:15;background:rgba(13,10,28,.6);opacity:0;pointer-events:none;will-change:opacity;transition:opacity .3s ease}
+header.open+.scrim{opacity:1;pointer-events:auto}
+.menu-open .pack::before,.menu-open .pack::after,.menu-open header::before,.menu-open header::after,.menu-open footer::before,.menu-open footer::after,.menu-open .info::before,.menu-open .info::after,.menu-open .yt::before,.menu-open .pat::before,.menu-open .dc::before,.menu-open .wiki::before,.menu-open .art i,.menu-open .ico svg{animation-play-state:paused}
+@media(max-width:720px){.menubtn{font-size:19px;padding:8px 14px}.drop ul{padding:18px 16px 24px;gap:14px}.drop a b{font-size:22px}}
+@media(prefers-reduced-motion:reduce){.drop,header.open .drop,.drop li,header.open .drop li,.scrim,.bars i{transition-duration:.01s;transition-delay:0s}.drop::after{animation:none}}
+
+/* ===== Wiki ===== */
+.wiki{border-top:4px solid var(--line);background:linear-gradient(180deg,rgba(255,138,60,.06),transparent 55%)}
+.wiki .lead{max-width:56ch;color:var(--muted);margin:-8px 0 22px}
+.wsearch{position:relative;max-width:560px;margin-bottom:34px}
+.wsearch input{padding-right:130px;opacity:.65;cursor:not-allowed}
+.wsearch span{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:.75rem;font-weight:800;border:2px dashed var(--gold);padding:1px 7px;pointer-events:none}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+.wcard{position:relative;display:flex;flex-direction:column;gap:10px;padding:22px;background:var(--panel);border:3px solid var(--line);box-shadow:5px 5px 0 var(--line);transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s,border-color .2s}
+.wcard:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--line);border-color:var(--gold)}
+.wcard svg{display:block;width:44px;height:44px;color:var(--gold)}
+.wcard h3{font-size:26px}
+.wcard p{margin:0;color:var(--muted);font-size:.95rem}
+.wsoon{position:absolute;top:12px;right:12px;color:var(--gold);font-size:.7rem;font-weight:800;border:2px dashed var(--gold);padding:1px 7px}
+
+
+/* ===== Wiki: tarjeta activa + Lore ===== */
+a.wcard{text-decoration:none;color:inherit}
+.wlive{position:absolute;top:12px;right:12px;background:var(--gold);color:#1b1f3a;font-size:.7rem;font-weight:800;border:2px solid #1b1f3a;padding:1px 7px}
+.lore{margin-top:64px;scroll-margin-top:100px}
+.lore:not([hidden]){animation:lin .4s ease-out}
+.ltop{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px 20px;margin-bottom:10px}
+.ltop h3{font-size:clamp(30px,4.6vw,44px)}
+.lbottom{display:flex;justify-content:center;margin-top:34px}
+a.wcard[aria-expanded="true"]{border-color:var(--gold);box-shadow:8px 8px 0 var(--line)}
+.wcard .wlive{transition:background .2s}
+.lore>.lead{margin:0 0 28px}
+.lbook{display:grid;grid-template-columns:310px minmax(0,1fr);gap:30px;align-items:start}
+.lnav{position:sticky;top:calc(96px + env(safe-area-inset-top,0px));max-height:calc(100vh - 124px);max-height:calc(100dvh - 124px);overflow-y:auto;overscroll-behavior:contain;background:var(--panel);border:3px solid var(--line);box-shadow:5px 5px 0 var(--line)}
+.lnav summary{list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:14px 16px;border-bottom:3px solid var(--line);font-family:'Minecraft Ten','MC Title',monospace;font-size:22px;cursor:default}
+.lnav summary::-webkit-details-marker{display:none}
+.lnav summary small{font-family:'MC',sans-serif;font-size:.8rem;color:var(--muted);display:none;text-align:right}
+.lpart{padding:14px 10px 8px}
+.lpart+.lpart{border-top:3px solid var(--line)}
+.lpart h4{margin:0 8px 8px;display:flex;gap:10px;align-items:baseline;font-family:'Minecraft Ten','MC Title',monospace;font-weight:400;font-size:17px;line-height:1.25;color:var(--gold)}
+.lpart h4 span{flex:none;min-width:2.2em;border:2px solid var(--gold);padding:1px 4px;text-align:center;font-size:14px}
+.lpart button{display:block;width:100%;text-align:left;background:transparent;border:3px solid transparent;color:var(--ink);font:inherit;font-size:16px;line-height:1.3;padding:8px 10px;cursor:pointer;transition:background .15s,border-color .15s}
+.lpart button:hover{background:var(--bg);border-color:var(--line)}
+.lpart button[aria-current="true"]{background:var(--bg);border-color:var(--gold)}
+.lpart button:focus-visible{outline:3px solid var(--accent2);outline-offset:-3px}
+.lread{position:relative;background:var(--panel);border:4px solid var(--line);box-shadow:8px 8px 0 var(--line);padding:clamp(22px,4.5vw,52px);min-height:560px;scroll-margin-top:100px}
+.lhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:14px 20px;margin-bottom:26px;padding-bottom:22px;border-bottom:3px solid var(--line)}
+.lhead>div{min-width:0}
+.lpath{margin:0 0 10px;color:var(--gold);font-weight:800;font-size:.95rem}
+.lread h4.ltitle{font-family:'Minecraft Ten','MC Title',monospace;font-weight:400;font-size:clamp(30px,5vw,50px);line-height:1.1;margin:0}
+.lkind{display:inline-block;margin-top:14px;border:2px solid var(--line);background:var(--bg);padding:2px 10px;font-weight:800;font-size:.85rem}
+.llang{display:flex}
+.llang button{font:inherit;font-weight:800;font-size:.95rem;color:var(--ink);background:var(--bg);border:3px solid var(--line);padding:6px 14px;cursor:pointer}
+.llang button+button{margin-left:-3px}
+.llang button[aria-pressed="true"]{background:var(--gold);color:#1b1f3a;border-color:var(--gold);position:relative}
+.llang button:disabled{opacity:.45;cursor:not-allowed}
+.llang button:focus-visible{outline:3px solid var(--accent2);outline-offset:2px}
+.lnote{margin:-8px 0 22px;color:var(--muted);font-size:.9rem}
+.lwarn{margin:0 0 26px;border:3px dashed var(--gold);padding:10px 14px;color:var(--gold);font-weight:400;font-size:.92rem}
+.ltext{max-width:64ch;font-family:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,'Times New Roman',serif;font-size:1.2rem;line-height:1.85;color:#efe3c6;animation:lin .45s ease-out}
+.ltext p{margin:0 0 1.15em;font-weight:400}
+.ltext h5{font-family:'Minecraft Ten','MC Title',monospace;font-weight:400;font-size:clamp(21px,3vw,27px);line-height:1.25;color:var(--gold);margin:2.1em 0 .8em;padding-top:1.1em;border-top:3px solid var(--line)}
+.ltext>h5:first-child{margin-top:0;padding-top:0;border-top:0}
+.ltext .lsub{font-family:'MC',sans-serif;font-size:.85rem;font-weight:800;color:var(--muted);margin:0 0 1.6em;letter-spacing:.04em}
+.ltext p.cap1::first-letter{float:left;font-family:'Minecraft Ten','MC Title',monospace;color:var(--gold);font-size:3.5em;line-height:.82;padding:.06em .12em 0 0}
+.ltext .lhr{display:flex;justify-content:center;gap:14px;margin:2em 0;color:var(--gold);font-size:.8rem}
+.ltext .lhr i{width:8px;height:8px;background:currentColor;transform:rotate(45deg)}
+.ltext p.lc{text-align:center;font-family:'MC',sans-serif;font-weight:800;font-size:1rem;color:var(--muted);margin:.4em 0}
+.ltext.tight p{margin:0 0 .65em}
+.ltext.voz{border-left:4px solid var(--accent);padding-left:clamp(14px,3vw,28px)}
+.ltext.voz p{font-style:italic}
+.lpager{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:44px;padding-top:26px;border-top:3px solid var(--line)}
+.lpager .btn{display:flex;flex-direction:column;gap:2px;max-width:100%;text-align:left}
+.lpager .btn small{font-size:.75rem;font-weight:700;color:var(--gold)}
+.lpager .btn:last-child{margin-left:auto;text-align:right}
+@keyframes lin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media(max-width:860px){
+.lbook{grid-template-columns:1fr;gap:22px}
+.lnav{position:static;max-height:none;overflow:visible}
+.lnav summary{cursor:pointer}
+.lnav summary small{display:block}
+.lnav:not([open]) summary{border-bottom:0}
+.lnav[open] .lnavlist{max-height:60vh;overflow-y:auto}
+.ltext{font-size:1.1rem}
+}
+@media(prefers-reduced-motion:reduce){.ltext,.lore:not([hidden]){animation:none}}
+</style>
+</head>
+<body>
+<header id="top">
+  <nav aria-label="Principal">
+    <a class="logo" href="#top" aria-label="Iron Souls™, inicio"><img src="IMG/ironsouls-logo.png" alt="Iron Souls™" width="117" height="66"></a>
+    <button class="menubtn" id="menubtn" type="button" aria-expanded="false" aria-controls="drop" aria-label="Abrir menú"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span class="lbl">Menú</span></button>
+  </nav>
+  <div class="drop" id="drop">
+    <div class="dropin">
+      <ul id="menu">
+        <li style="--i:0"><a href="#top"><em>01</em><b>Inicio</b><small>La portada</small></a></li>
+        <li style="--i:1"><a href="#modpack"><em>02</em><b>Modpack</b><small>Iron Souls Overlords</small></a></li>
+        <li style="--i:2"><a href="#youtube"><em>03</em><b>YouTube</b><small>Vídeos y novedades</small></a></li>
+        <li style="--i:3"><a href="#patreon"><em>04</em><b>Patreon</b><small>Apoya el desarrollo</small></a></li>
+        <li style="--i:4"><a href="#discord"><em>05</em><b>Discord</b><small>La comunidad</small></a></li>
+        <li style="--i:5"><a href="#wiki"><em>06</em><b>Wiki</b><small>Guías y datos</small><span class="new">NUEVO</span></a></li>
+        <li style="--i:6"><a href="#info"><em>07</em><b>Información</b><small>Sobre el estudio</small></a></li>
+        <li style="--i:7"><a href="#contacto"><em>08</em><b>Contacto</b><small>¿Necesitas ayuda?</small></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="sp" id="sp"></div>
+</header>
+<div class="scrim" id="scrim"></div>
+
+<div class="slider" role="region" aria-roledescription="carrusel" aria-label="Destacados">
+  <div class="track" id="track">
+    <article class="slide" aria-roledescription="diapositiva" aria-label="1 de 3">
+      <div class="bg" style="background-image:url('IMG/slide-modpacks.jpg')"></div>
+      <div class="cap"><h1>Iron Souls Overlords</h1><p>Un modpack de fantasía oscura con jefes, armas, lore y misiones.</p><a class="btn" href="#modpack">Ver modpack</a></div>
+      <img class="pic" src="IMG/slide-modpacks.jpg" alt="Iron Souls Overlords">
+    </article>
+    <article class="slide" aria-roledescription="diapositiva" aria-label="2 de 3">
+      <div class="bg" style="background-image:url('IMG/slide-youtube.jpg')"></div>
+      <div class="cap"><h1>YouTube</h1><p>Mira el modpack en acción en nuestro canal.</p><a class="btn" href="#youtube">Ir al canal</a></div>
+      <img class="pic sq" src="IMG/slide-youtube.jpg" alt="Canal de YouTube">
+    </article>
+    <article class="slide" aria-roledescription="diapositiva" aria-label="3 de 3">
+      <div class="bg" style="background-image:url('IMG/slide-comunidad.jpg')"></div>
+      <div class="cap"><h1>Discord</h1><p>Únete a la comunidad y entérate de todo lo nuevo.</p><a class="btn" href="#discord">Unirme</a></div>
+      <img class="pic" src="IMG/slide-comunidad.jpg" alt="Servidor de Discord">
+    </article>
+  </div>
+  <button class="arrow prev" aria-label="Anterior">‹</button>
+  <button class="arrow next" aria-label="Siguiente">›</button>
+  <div class="dots" id="dots"></div>
+  <button class="pausebtn" id="pb" aria-label="Pausar el carrusel">❚❚</button>
+  <div class="progress" id="bar"></div>
+</div>
+
+<main>
+<section id="modpack" class="band"><div class="wrap">
+  <h2 class="rv">Nuestro modpack</h2>
+  <article class="pack rv">
+    <div class="art" id="art" aria-hidden="true">
+      <i style="--x:12%;--d:0s"></i><i style="--x:28%;--d:1.4s"></i><i style="--x:47%;--d:.6s"></i><i style="--x:63%;--d:2.1s"></i><i style="--x:78%;--d:1s"></i><i style="--x:90%;--d:2.7s"></i>
+      <div class="moon"></div><div class="castle"></div>
+    </div>
+    <div class="pinfo">
+      <h3>Iron Souls Overlords</h3>
+      <p>Un modpack de fantasía oscura con jefes, armas y mucho más, con una historia profunda, su propio lore y un montón de misiones.</p>
+      <ul class="chips"><li>Aventura</li><li>Desafiante</li><li>Combate</li><li>Magia</li><li>Misiones</li></ul>
+      <dl class="specs"><div><dt>Minecraft</dt><dd>Java 1.20.1</dd></div><div><dt>Plataforma</dt><dd>Forge</dd></div><div><dt>Juega en</dt><dd>Cliente y servidor</dd></div></dl>
+      <div class="row"><a class="btn" href="https://modrinth.com/modpack/iron-souls-overlords" target="_blank" rel="noopener">Ver en Modrinth</a><a class="btn alt" href="https://modrinth.com/modpack/iron-souls-overlords/versions" target="_blank" rel="noopener">Descargar versiones</a></div>
+    </div>
+  </article>
+</div></section>
+
+<section id="youtube" class="band yt"><div class="wrap split">
+  <div class="rv"><h2>YouTube</h2><p>Mira el modpack en acción, con vídeos y novedades en nuestro canal.</p><a class="btn light" href="https://www.youtube.com/@itstomystacks" target="_blank" rel="noopener">Ir al canal</a></div>
+  <div class="ico rv" style="--hole:#6a1729"><svg viewBox="0 0 64 64" width="120" height="120" aria-hidden="true" fill="currentColor"><path d="M10 14h44a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6H10a6 6 0 0 1-6-6V20a6 6 0 0 1 6-6zm18 9v18l16-9z" fill-rule="evenodd"/></svg></div>
+</div></section>
+
+<section id="patreon" class="band pat"><div class="wrap split rev">
+  <div class="rv"><h2>Patreon</h2><p>Apoya el desarrollo de los modpacks Iron Souls y entra a ver las ventajas que hay disponibles.</p><a class="btn light" href="https://www.patreon.com/cw/ironsoulstm" target="_blank" rel="noopener">Apoyar en Patreon</a></div>
+  <div class="ico rv" style="--hole:#8a3c0d"><svg viewBox="0 0 64 64" width="120" height="120" aria-hidden="true" fill="currentColor"><path d="M32 56 8 32a14 14 0 0 1 24-14 14 14 0 0 1 24 14z"/></svg></div>
+</div></section>
+
+<section id="discord" class="band dc"><div class="wrap split">
+  <div class="rv"><h2>Discord</h2><p>Charla con la comunidad, resuelve dudas y entérate de las novedades antes que nadie.</p><a class="btn light" href="https://discord.gg/HzsB5FZGpN" target="_blank" rel="noopener">Unirme al servidor</a></div>
+  <div class="ico rv" style="--hole:#2b2272"><svg viewBox="0 0 64 64" width="120" height="120" aria-hidden="true" fill="currentColor"><path d="M8 8h48a4 4 0 0 1 4 4v30a4 4 0 0 1-4 4H30L16 58V46H8a4 4 0 0 1-4-4V12a4 4 0 0 1 4-4z"/><circle cx="22" cy="27" r="4" fill="var(--hole)"/><circle cx="32" cy="27" r="4" fill="var(--hole)"/><circle cx="42" cy="27" r="4" fill="var(--hole)"/></svg></div>
+</div></section>
+
+<section id="wiki" class="band wiki"><div class="wrap">
+  <div class="rv">
+    <h2>Wiki</h2>
+    <p class="lead">Aquí vive la información de Iron Souls Overlords. El lore ya se puede leer; el resto de secciones llegan pronto.</p>
+    <div class="wsearch"><input type="search" placeholder="Buscar en la wiki…" aria-label="Buscar en la wiki" disabled><span>Próximamente</span></div>
+  </div>
+  <div class="wgrid rv">
+    <article class="wcard"><svg viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="0" y="1" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="1" y="7" width="1" height="1"/><rect x="2" y="7" width="1" height="1"/><rect x="3" y="7" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="5" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/></svg><h3>Jefes</h3><p>Todo sobre los jefes del modpack.</p><span class="wsoon">Próximamente</span></article>
+    <article class="wcard"><svg viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="3" y="7" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/></svg><h3>Armas</h3><p>Armas, armaduras y equipo.</p><span class="wsoon">Próximamente</span></article>
+    <a class="wcard" id="lorecard" href="#lore" role="button" aria-expanded="false" aria-controls="lore"><svg viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="0" y="1" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="7" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="5" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/><rect x="1" y="7" width="1" height="1"/><rect x="2" y="7" width="1" height="1"/><rect x="3" y="7" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="5" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/></svg><h3>Lore</h3><p>La historia y el mundo de Iron Souls.</p><span class="wlive">Disponible</span></a>
+    <article class="wcard"><svg viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="0" width="1" height="1"/><rect x="1" y="0" width="1" height="1"/><rect x="2" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="0" y="1" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="0" y="7" width="1" height="1"/><rect x="1" y="7" width="1" height="1"/><rect x="2" y="7" width="1" height="1"/></svg><h3>Misiones</h3><p>Misiones y objetivos paso a paso.</p><span class="wsoon">Próximamente</span></article>
+  </div>
+
+  <div class="lore" id="lore" hidden>
+    <div class="ltop"><h3>Lore</h3><button class="btn alt lclose" type="button">Cerrar lore</button></div>
+    <p class="lead">La historia de Iron Souls, ordenada por partes. Elige un texto del índice y cambia entre español e inglés cuando exista traducción.</p>
+    <div class="lbook">
+      <details class="lnav" id="lnav" open>
+        <summary><span>Índice</span><small id="lcur"></small></summary>
+        <div class="lnavlist" id="lnavlist"></div>
+      </details>
+      <article class="lread" id="lread" aria-live="polite"></article>
+    </div>
+    <div class="lbottom"><button class="btn alt lclose" type="button">Cerrar lore</button></div>
+  </div>
+</div></section>
+
+<div class="info" id="info"><div class="wrap rv" style="padding-block:48px">
+  <div>
+    <h2>Información</h2>
+    <p>Iron Souls™ es un estudio de desarrollo de modpacks experimentado, el cual está especializado en modpacks RPG. Te esperamos en Discord, donde podrás unirte a nuestra familia y conversar con los desarrolladores directamente. ¡Esperamos verte pronto!</p>
+  </div>
+  <figure class="mascot"><img src="IMG/info-personaje.png" alt="Personaje de Iron Souls™" width="378" height="663"><div class="partners" aria-label="Estudio"><b>IRON SOULS™</b></div></figure>
+</div></div>
+
+<section id="contacto" class="rv-wrap"><div class="wrap">
+  <h2>¿Necesitas ayuda?</h2>
+  <p style="max-width:56ch;color:var(--muted);margin:-8px 0 24px">Escribe tu correo, elige una categoría y cuéntanos qué te pasa. Te responderemos pronto.</p>
+  <form id="f" action="https://formsubmit.co/33tommyjerry22@gmail.com" method="POST">
+    <input type="hidden" name="_subject" value="Nuevo mensaje desde la web">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
+    <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+    <label>Correo electrónico *<input type="email" name="email" required autocomplete="email"></label>
+    <label>Tipo de consulta *
+      <select name="tipo" required><option value="">Elige una opción</option><option>Sugerencias</option><option>Soporte técnico</option><option>Problemas con un proyecto</option><option>Pagos y facturación</option><option>Otra consulta</option></select>
+    </label>
+    <label>Describe tu problema *<textarea name="mensaje" required></textarea></label>
+    <label class="check"><input type="checkbox" name="acepto" required> Acepto los términos de soporte y la política de privacidad.</label>
+    <button class="btn" type="submit" style="justify-self:start">Enviar</button>
+    <div id="ok" role="status">Mensaje enviado. Te responderemos pronto.</div>
+  </form>
+</div></section>
+<script type="application/json" id="loredata">[{"id": "I", "title": "El origen", "blurb": "Dragones, humanos y el amor que rompió el mundo.", "entries": [{"id": "regalo", "title": "El regalo de Fin-Apar", "kind": "Crónica", "es": [["p", "Al principio de todo, el mundo era habitado por dragones, criaturas poderosas."], ["p", "El rey dragón, Fin-Apar, vio aparecer a las razas inferiores, evolucionar, crecer."], ["p", "Vio como los primeros humanos empezaban a surgir. Y algo impensable sucedió."], ["p", "El gran rey dragón Fin-Apar se enamoró de una dulce humana, pequeña, débil."], ["p", "Ellos dos se amaban el uno al otro, pero ambos reinos no pensaban igual."], ["p", "Un humano, dotado con la primera aparición de la maldición del hueco consiguió destruir un huevo de reina. Ahí es cuando estalló la guerra."], ["p", "Fin-Apar tendría que haber matado a la humana, pero no lo hizo, su vínculo era demasiado fuerte."], ["p", "Fin-Apar recibió cada flecha, cada golpe por ella, y con ella arrodillada, él murió pocos días después de que la guerra acabara. Soportó el dolor durante años."], ["p", "La humana no sabía nada, Fin-Apar sonreía como si nada sucediera a sus espaldas, pero al verla se puede ver que está llena de flechas."], ["p", "Un día, el corazón del gran dragón dejó de latir, y la humana lloró desconsolada por días, al no saber que le había ocurrido, le miró la espalda que él tanto le ocultó, y vio que poco de piel quedaba sobre ella. La mayoría estaba bajo heridas producidas por estacas, flechas draconianas, lanzas."], ["p", "Él llevaba siendo feliz con ella tanto tiempo sin hacerle caso a lo que pasaba atrás suya."], ["p", "Poco después, la humana, frágil y sensible, consumida por la tristeza, cortó su propio cuello delante del cuerpo de su amado, cuando sus dos sangres se mezclaron, nació la primera divinidad."], ["p", "La Presencia."]], "en": [["p", "In the beginning, the world was inhabited by dragons, powerful creatures."], ["p", "The dragon king, Fin-Apar, watched as the lesser races appeared, evolved, and grew."], ["p", "He saw the first humans begin to emerge."], ["p", "And then something unthinkable happened."], ["p", "The great dragon king Fin-Apar fell in love with a sweet, small, and frail human."], ["p", "The two loved each other, but their respective kingdoms did not feel the same way."], ["p", "A human, afflicted by the first manifestation of the Curse of the Void, managed to destroy a queen’s egg. That is when war broke out."], ["p", "Fin-Apar should have killed the human, but he didn’t; their bond was too strong."], ["p", "Fin-Apar took every arrow, every blow for her, and with her kneeling by his side, he died a few days after the war ended. He endured the pain for years."], ["p", "The human knew nothing; Fin-Apar smiled as if nothing were happening behind her back, but when you look at her, you can see she is riddled with arrows."], ["p", "One day, the great dragon’s heart stopped beating, and the human wept inconsolably for days. Not knowing what had happened to him, she looked at the back he had hidden from her so carefully and saw that little skin remained on it. Most of it was covered in wounds from stakes, draconic arrows, and spears."], ["p", "He had been happy with her for so long, paying no heed to what was happening behind him."], ["p", "Shortly thereafter, the human, fragile and sensitive, consumed by sadness, slit her own throat in front of her beloved’s body; when their two bloods mingled, the first divinity was born."], ["p", "The Presence."]]}, {"id": "era-dorada", "title": "La era dorada", "kind": "Crónica", "es": [["p", "Incluso antes de la aparición de los primeros humanos, la superficie era dominada por un solo tipo de criaturas, los dragones."], ["p", "Estos seres gigantescos nacieron del centro mismo del planeta, dónde hasta los metales más resistentes se derriten."], ["p", "El primer dragón, el gran Fin-Apar, creó la raza que hoy en día conocemos, a base de solo trozos de fuego y lava."], ["p", "Y el tiempo pasó, más rápido de lo que a ellos les hubiera gustado, ya que al pasar los siglos, otras especies se desarrollaban, evolucionaban, se reproducían."], ["p", "De entre todas esas especies inferiores, nació una muy especial. Nacieron los humanos."], ["p", "De algo que ni siquiera los poderosos y omniscientes dragones podían entender."], ["p", "La fe."], ["p", "Los seres humanos tenían algo único dentro de ellos, una fuerza de voluntad, un pozo de poder inigualable, pero sus cuerpos eran débiles, por lo cual nunca pudieron posicionarse en la cima."], ["p", "Un día, nació una humana, que inmediatamente se coronó como la líder de la raza humana, había nacido con los iris de color plateado, algo nunca antes visto."], ["p", "No contaba con visión, era ciega, pero eso no la hacía menos capaz."], ["p", "Cuando esa humana nació, y por el color de sus ojos, a ella y a sus descendientes de su mismo tinte, les llamaron Las Damas De Hierro."], ["p", "Esta familia tenía un poder que ninguna otra rama poseía."], ["p", "Tenían la capacidad de guiar, del saber. Tenían una voz poderosa, que solo hablaba con la verdad, y lo más importante, este poder y confianza que ellas emanaban se contagiaba a todos sus alrededores, dotando a los humanos con una determinación infinitamente mayor."], ["p", "El mundo comenzó a oler a ceniza y metal. Mientras los dragones observaban desde las cumbres volcánicas, las Damas de Hierro empezaron a susurrar a los oídos de los oprimidos. No les prometieron fuerza física, sino algo mucho más peligroso: propósito."], ["p", "La primera líder, la de ojos de luna estática, no necesitaba ver el fuego de los dragones para saber que podía extinguirlo. Porque el hierro, aunque nace del calor, solo alcanza su verdadera forma cuando es golpeado y enfriado. Y los humanos, bajo su guía, estaban listos para ser la espada que cortara las alas del cielo."], ["p", "Pero ocurrió algo que nadie esperaba."], ["p", "Fin-Apar cayó enamorado a los pies de la humana."], ["p", "El amor de Fin-Apar por la pequeña humana no fue una bendición, sino el primer peldaño hacia la condenación del mundo. Mientras el Rey Dragón se marchitaba en silencio, ocultando una espalda que ya no era piel sino una costra de estacas, flechas draconianas y lanzas oxidadas que había recibido para protegerla, el aire se volvía pesado, cargado con el hedor de la traición. Él sonreía mientras moría por dentro, sosteniendo la fragilidad de su amada mientras el mundo exterior se ahogaba en la sangre de una guerra que ellos mismos habían provocado."], ["p", "Cuando el corazón titánico de Fin-Apar finalmente se detuvo, el silencio que siguió fue más aterrador que cualquier rugido. La humana, consumida por una tristeza que le arrancó la cordura, descubrió la verdad que él tanto ocultó: la espalda de su amado era un mapa de agonía y sacrificio. En un acto de desesperación absoluta, frente al cadáver de la bestia que la amó más que a su propia especie, ella hundió el acero en su propio cuello."], ["p", "No fue una muerte limpia. Mientras su vida se escapaba en borbotones rítmicos, su sangre cálida y mortal comenzó a filtrarse entre las escamas frías de Fin-Apar, mezclándose con la esencia ígnea que aún emanaba del cuerpo del dragón. En ese charco de fluidos incompatibles, la realidad se rasgó. De la amalgama de carne humana y fuego primigenio no nació un heredero, sino un horror: La Presencia. Surgió como una divinidad nacida del trauma y el suicidio, una entidad que no conocía la piedad porque su primer aliento fue el olor de la sangre de sus padres mezclada en el suelo. Fue el primer grito de un dios que, al abrir los ojos, solo vio un mundo que ya había empezado a pudrirse bajo la sombra de los engendros y la ambición de las facciones."], ["p", "La era dorada no terminó con un suspiro; terminó con el sonido del metal cortando la garganta de la inocencia, dando paso a una creadora que castigaría a su propia creación con una ira infinita."], ["p", "Durante el breve lapso en que Fin-Apar y la hermosa humana compartieron el aliento de vida, la unión de sus sangres, tan opuestas como el fuego eterno y la arcilla débil, dio frutos tanto divinos como monstruosos. Aunque de aquel vientre nacieron cuatro figuras destinadas a marcar la historia —Malkuth, señor de los elementos; Geburah, el juicio divino; Ignis, guerrero del inframundo; y la Hija Sin Nombre, fundadora de las Damas de Hierro—, el camino hacia su nacimiento estuvo sembrado de horrores."], ["p", "La naturaleza se rebeló ante una relación entre razas tan contradictorias, y la cantidad de intentos fallidos por conseguir descendencia fue abismal. Hubo embriones que se marchitaban a los pocos meses en la oscuridad del útero; otros, los más desafortunados, lograban llegar al término solo para estallar en mil pedazos al inhalar su primer suspiro de aire mortal. Sin embargo, existieron aquellos que no murieron de inmediato. Se les conoció como Los Engendros."], ["p", "Estas criaturas desarrollaron prematuramente los atributos draconianos de su padre, pero carecían de la sabiduría de su especie. Eran seres de pura violencia, monstruosidades que cometían crímenes atroces impulsados por un instinto deforme, sin comprender jamás el mundo que devastaban a su paso. Ante la imposibilidad de amar a estos hijos y el peligro de dejarlos libres, el gran rey Fin-Apar creó el Lago Azul. Enterrado a profundidades donde la luz del sol es solo una leyenda, este vasto depósito de “enfermedad purificadora” se convirtió en la prisión de su estirpe fallida."], ["p", "Al entrar en contacto con las aguas gélidas y extrañas del lago, los engendros no morían; su carne se transformaba en roca viva, atrapándolos en un letargo mineral. Allí permanecen todavía, como un bosque de estatuas agonizantes que decoran el silencio del abismo, esperando, en una quietud aterradora, el momento en que alguien —o algo— los despierte de su sueño de piedra."]], "en": [["p", "Even before the first humans appeared, the surface was dominated by a single type of creature: dragons."], ["p", "These gigantic beings were born from the very core of the planet, where even the hardest metals melt."], ["p", "The first dragon, the great Fin-Apar, created the race we know today, using nothing but fragments of fire and lava."], ["p", "And time passed, faster than they would have liked, for as the centuries went by, other species developed, evolved, and reproduced."], ["p", "Among all those lesser species, a very special one was born. Humans were born."], ["p", "From something that not even the powerful and omniscient dragons could understand."], ["p", "Faith."], ["p", "Human beings had something unique within them—a willpower, a wellspring of unmatched power—but their bodies were weak, which is why they could never rise to the top."], ["p", "One day, a human was born who immediately crowned herself the leader of the human race; she had been born with silver-colored irises, something never seen before."], ["p", "She had no sight—she was blind—but that did not make her any less capable."], ["p", "When that human was born, and because of the color of her eyes, she and her descendants of the same hue were called the Iron Ladies."], ["p", "This family possessed a power that no other branch had."], ["p", "They had the ability to guide and to know. They had a powerful voice that spoke only the truth, and most importantly, the power and confidence they exuded spread to everyone around them, endowing humans with infinitely greater determination."], ["p", "The world began to smell of ash and metal. As the dragons watched from the volcanic peaks, the Iron Ladies began to whisper in the ears of the oppressed. They did not promise them physical strength, but something far more dangerous: purpose."], ["p", "The first leader, the one with eyes like a still moon, did not need to see the dragons’ fire to know she could extinguish it. For iron, though born of heat, only achieves its true form when it is struck and cooled. And the humans, under her guidance, were ready to be the sword that would sever the wings of the sky."], ["p", "But something happened that no one expected."], ["p", "Fin-Apar fell in love at the feet of the human."], ["p", "Fin-Apar’s love for the little human was not a blessing, but the first step toward the world’s doom. As the Dragon King withered in silence, hiding a back that was no longer skin but a crust of stakes, draconic arrows, and rusted spears he had taken to protect her, the air grew heavy, laden with the stench of betrayal. He smiled as he died inside, holding up the fragility of his beloved while the outside world drowned in the blood of a war they themselves had provoked."], ["p", "When Fin-Apar’s titanic heart finally stopped, the silence that followed was more terrifying than any roar. The human, consumed by a sorrow that robbed her of her sanity, discovered the truth he had so carefully hidden: her beloved’s back was a map of agony and sacrifice. In an act of utter desperation, standing before the corpse of the beast who loved her more than his own kind, she plunged the steel into her own neck. It was not a clean death. As her life ebbed away in rhythmic spurts, her warm, mortal blood began to seep between Fin-Apar’s cold scales, mingling with the fiery essence still emanating from the dragon’s body."], ["p", "In that pool of incompatible fluids, reality tore apart. From the amalgam of human flesh and primal fire, an heir was not born, but a horror: The Presence. It emerged as a divinity born of trauma and suicide, an entity that knew no mercy because its first breath was the scent of its parents’ blood mingled with the earth. It was the first cry of a god who, upon opening his eyes, saw only a world that had already begun to rot under the shadow of the monstrosities and the ambition of the factions."], ["p", "The golden age did not end with a sigh; it ended with the sound of metal slicing through the throat of innocence, giving way to a creator who would punish her own creation with infinite wrath."], ["p", "During the brief moment when Fin-Apar and the beautiful human shared the breath of life, the union of their blood—as opposed as eternal fire and fragile clay—bore both divine and monstrous fruit. Although four figures destined to shape history were born from that womb—Malkuth, lord of the elements; Geburah, divine judgment; Ignis, warrior of the underworld; and the Nameless Daughter, founder of the Iron Ladies—the path to their birth was strewn with horrors."], ["p", "Nature rebelled against such a contradictory interracial union, and the number of failed attempts to produce offspring was staggering. Some embryos withered away within a few months in the darkness of the womb; others, the most unfortunate, managed to reach full term only to burst into a thousand pieces upon taking their first breath of mortal air."], ["p", "However, there were those who did not die immediately. They were known as The Spawn."], ["p", "These creatures prematurely developed their father’s draconic attributes, but lacked the wisdom of his kind. They were beings of pure violence, monstrosities that committed atrocious crimes driven by a twisted instinct, never understanding the world they devastated in their wake."], ["p", "Faced with the impossibility of loving these children and the danger of setting them free, the great king Fin-Apar created the Blue Lake. Buried at depths where sunlight is but a legend, this vast reservoir of “purifying sickness” became the prison of his failed lineage."], ["p", "Upon coming into contact with the lake’s icy, strange waters, the monstrosities did not die; their flesh transformed into living rock, trapping them in a mineral slumber. There they remain to this day, like a forest of agonizing statues adorning the silence of the abyss, waiting, in terrifying stillness, for the moment when someone—or something—awakens them from their stone sleep."]]}, {"id": "engendros", "title": "Los engendros", "kind": "Crónica", "es": [["p", "Durante el lapso de tiempo en el cual Fin-Apar y la humana estuvieron los dos vivos, de algún modo la fiel hermosa consiguió quedar embarazada de 4 hijos;"], ["p", "– Malkuth, el señor de los elementos."], ["p", "– Geburah, el juicio divino."], ["p", "– Ignis, el guerrero del inframundo."], ["p", "Y una hija, la cual nadie sabe quién es."], ["p", "Saben que su hija fue quien creó a la orden de las Damas de Hierro, de cierta forma, la propia hija aportó a la destrucción de los territorios."], ["p", "Pero esos no fueron los únicos hijos que tuvieron. Al ser una relación entre dos razas completamente opuestas, la cantidad de intentos fallidos para conseguir un descendiente era abismal. Embriones que morían a los pocos meses y los pocos que llegaban a nacer la mayoría de las veces explotaban en mil pedazos al respirar por primera vez."], ["p", "Pero algunos no morían inmediatamente, se volvían violentos a temprana edad, desarrollaban los atributos draconianos de su padre y cometían crímenes incluso sin saber lo que estaba ocurriendo a su alrededor."], ["p", "Por eso el gran rey Fin-Apar creó el “Lago Azul” un gran lago de enfermedad purificadora, enterrado lejos bajo tierra. Los engendros, al tocar el agua de ese lago, se convertían en roca. Y se quedaban como si de unas estatuas se trataran."], ["p", "Hoy, esas estatuas siguen ahí, esperando a ser despertadas."]], "en": [["p", "During the time when Fin-Apar and the human woman were both alive, the faithful beauty somehow managed to become pregnant with four children:"], ["p", "– Malkuth, the lord of the elements."], ["p", "– Geburah, divine judgment."], ["p", "– Ignis, the warrior of the underworld."], ["p", "And a daughter, whose identity remains unknown."], ["p", "They know that it was their daughter who created the Order of the Iron Ladies; in a way, the daughter herself contributed to the destruction of the territories."], ["p", "But those were not the only children they had."], ["p", "Since it was a relationship between two completely opposing races, the number of failed attempts to produce an offspring was staggering. Embryos that died within a few months, and the few that managed to be born usually exploded into a thousand pieces upon taking their first breath."], ["p", "But some did not die immediately; they became violent at an early age, developed their father’s draconic traits, and committed crimes without even knowing what was happening around them."], ["p", "That is why the great king Fin-Apar created the “Blue Lake,” a vast lake of purifying sickness, buried deep underground. The monstrosities, upon touching the water of that lake, turned to stone. And they remained there as if they were statues. Today, those statues are still there, waiting to be awakened."]]}, {"id": "testigo", "title": "El testigo de la creación", "kind": "Testimonio", "es": [["p", "Nadie sabe cómo Elian encontró el nexo donde la carne del Dragón y el alma de la Mujer se fundieron para engendrar a la Creadora. Pero lo hizo. Antes de que La Presencia se ocultara tras el velo de la realidad para observar su obra devastada, un solo hombre la miró de frente. No vio una forma, vio una contradicción."], ["p", "Elian intentó describir lo que sintió, pero su lengua se transformó en un trozo de carbón húmedo dentro de su boca. Sus ojos, antes claros, comenzaron a llorar un humor vítreo mezclado con ceniza volcánica. Ver a La Presencia no fue un acto de iluminación, fue una violación de las leyes de la materia. Sus pupilas se dilataron hasta reventar, pues el ojo humano no está diseñado para procesar el color de una sangre que es, al mismo tiempo, fuego líquido y llanto mortal. El poder de la deidad se manifestó en él como una vibración que deshacía sus huesos. En su mente, el grito de agonía de la humana al cortarse el cuello se repetía en un bucle infinito, amplificado por el rugido de un sol que colapsa. Elian no enloqueció de forma simple; su consciencia se fragmentó en mil espejos, y en cada uno de ellos, veía a La Presencia devorando el tiempo."], ["p", "“Es un parto que nunca termina”, garabateó con sus propios dedos rotos en las paredes de su celda antes de morir. “Es el hambre de un dragón con el corazón roto de una madre”."], ["p", "La Presencia no necesitó tocarlo. Su mera existencia es una herida abierta en el mundo. Elian pasó sus últimos días arrancándose trozos de piel, convencido de que bajo sus escamas humanas crecía el fuego del abismo, el mismo que consume a los dioses y encierra a los hombres en prisiones de silencio eterno."]], "en": [["p", "No one knows how Elian found the point where the Dragon’s flesh and the Woman’s soul merged to give birth to the Creator. But he did. Before The Presence hid behind the veil of reality to observe her devastated creation, a single man looked her straight in the face."], ["p", "He did not see a form; he saw a contradiction."], ["p", "Elian tried to describe what he felt, but his tongue turned into a piece of damp charcoal inside his mouth. His eyes, once clear, began to weep a vitreous fluid mixed with volcanic ash. Seeing The Presence was not an act of enlightenment; it was a violation of the laws of matter. His pupils dilated until they burst, for the human eye is not designed to process the color of blood that is, at the same time, liquid fire and mortal tears. The deity’s power manifested within him as a vibration that shattered his bones. In his mind, the human’s agonized scream as she slit her throat repeated in an endless loop, amplified by the roar of a collapsing sun. Elian did not simply go mad; his consciousness shattered into a thousand mirrors, and in each one, he saw The Presence devouring time."], ["p", "“It is a birth that never ends,” he scrawled with his own broken fingers on the walls of his cell before dying. “It is the hunger of a dragon with the broken heart of a mother.”"], ["p", "The Presence did not need to touch him. Its mere existence is an open wound in the world. Elian spent his final days tearing off chunks of skin, convinced that beneath his human scales the fire of the abyss was growing—the same fire that consumes the gods and imprisons men in prisons of eternal silence."]]}]}, {"id": "II", "title": "La Orden de las Damas de Hierro", "blurb": "Quiénes son las Damas y la leyenda que inventaron.", "entries": [{"id": "damas", "title": "Las Damas de Hierro", "kind": "Doctrina", "es": [["sub", "EL EVANGELIO DE LA MÉDULA FRÍA: LA ASCENSIÓN DE LAS CIEGAS"], ["h", "I. El Aborto del Destino (La Primogénita)"], ["p", "Antes de que el tiempo tuviera nombre, del cadáver caliente de la Bestia Roja y el vientre desgarrado de la Humana no solo brotó un Dios. Hubo una excrecencia. Una niña que no gritó al nacer porque su garganta estaba llena de limaduras de plata. La Hija sin Nombre no fue parida; fue arrancada de la lógica. Nació con los ojos vueltos hacia adentro, mirando un sol que no brilla en nuestro cielo, sino en el abismo de las almas. Ella no veía el mundo; ella lo “recordaba” antes de que sucediera. Fue ella quien fundó la Orden, no con palabras, sino cosiendo los párpados de sus seguidoras con hilos de hierro fundido extraído del corazón de su padre muerto. Se dice que el primer territorio no fue destruido por la guerra, sino por el primer susurro de esta niña: una verdad tan absoluta que las piedras prefirieron convertirse en polvo antes que seguir existiendo en su presencia."], ["h", "II. La Liturgia de la Carne y el Argén"], ["p", "La Orden de las Damas de Hierro no se hereda por el vientre, sino por la infección. Para que una niña humana se convierta en “Dama”, su sangre debe ser purgada. En el Ritual del Pozo Seco, las novicias beben la esencia destilada de los Engendros petrificados del Lago Azul."], ["p", "Sus iris se vuelven plata no por belleza, sino porque el metal está reemplazando su humanidad. El hierro busca el hierro. Sus huesos se vuelven pesados, densos como el centro del planeta. No comen pan; se alimentan del eco de las plegarias de los muertos. Por eso su voz es insoportable: cuando una Dama de Hierro habla, no escuchas una lengua humana, escuchas el crujido de las placas tectónicas y el lamento de la humana que se cortó el cuello. Ellas son el parásito que la fe humana dejó en el cadáver de la creación."], ["h", "III. El Perro de la Nada y la Correa Plateada"], ["p", "Durante ochocientos inviernos de silencio, las Damas no esperaron a un salvador. Criaron a un verdugo. Tú, el Hueco, no eres más que un instrumento afinado por sus manos frías. ¿Por qué te alimentaron con sangre divina mientras dormías? No fue por piedad. Fue para que tu paladar solo reconociera el sabor de los dioses."], ["p", "Ellas son las arquitectas del genocidio. En las sombras, las Damas de Hierro susurraron a los Reyes y a los Dioses, dándoles “determinación”. Una determinación que los llevó a la autodestrucción. Necesitaban que el mundo quedara vacío para que solo quedaras tú, el animal sediento, y ellas, las únicas que pueden sostener tu correa sin quemarse."], ["h", "IV. Freya: El Recipiente del Último Grito"], ["p", "Y ahora llegamos a Freya. La última costra de una herida milenaria. No la mires como a una mujer; mírala como a una tumba que camina. Sus ojos de plata ya no brillan; sangran un mercurio espeso que marca el camino hacia los hogares divinos."], ["p", "Ella dice que no sabe luchar, y es la verdad más aterradora: no necesita mover un dedo cuando tiene a su lado a una criatura que ha devorado el cielo. Freya no te guía hacia los dioses para que los mates; te guía para que ella pueda beber lo que quede de sus agonías. Ella es el “fin de la sed”. Cuando el último dios caiga y su sangre bañe los pies de plata de Freya, la Verdad que la primera Dama descubrió se hará carne."], ["p", "¿Qué pasará cuando la última Dama de Hierro sea la única voluntad que quede en un mundo de ceniza? ¿Eres tú quien la protege a ella, o es ella quien te mantiene con vida porque aún queda una última gota de divinidad que solo tú puedes extraer?"]], "en": [["sub", "THE GOSPEL OF THE COLD MARROW: THE ASCENSION OF THE BLIND"], ["h", "I. The Abortion of Destiny (The Firstborn)"], ["p", "Before time had a name, from the warm corpse of the Red Beast and the torn womb of the Human, not only did a God spring forth. There was a growth. A girl who did not cry at birth because her throat was filled with silver filings. The Nameless Daughter was not born; she was torn from logic."], ["p", "She was born with her eyes turned inward, gazing at a sun that does not shine in our sky, but in the abyss of souls. She did not see the world; she “remembered” it before it happened. It was she who founded the Order, not with words, but by sewing the eyelids of her followers shut with threads of molten iron extracted from the heart of her dead father. It is said that the first territory was not destroyed by war, but by this girl’s first whisper: a truth so absolute that the stones preferred to turn to dust rather than continue to exist in her presence."], ["h", "II. The Liturgy of Flesh and Silver"], ["p", "The Order of the Iron Ladies is not inherited through the womb, but through infection. For a human girl to become a “Lady,” her blood must be purged. In the Ritual of the Dry Well, the novices drink the distilled essence of the petrified Spawn of the Blue Lake."], ["p", "Their irises turn silver not for beauty, but because the metal is replacing their humanity. Iron seeks iron. Their bones grow heavy, dense as the planet’s core. They do not eat bread; they feed on the echo of the dead’s prayers. That is why their voice is unbearable: when an Iron Lady speaks, you do not hear a human tongue, you hear the creaking of tectonic plates and the wail of the human who slit her own throat. They are the parasite that human faith left in the corpse of creation."], ["h", "III. The Dog of Nothingness and the Silver Leash"], ["p", "For eight hundred winters of silence, the Ladies did not wait for a savior. They raised an executioner. You, the Hollow One, are nothing more than an instrument tuned by their cold hands. Why did they feed you divine blood while you slept? It was not out of mercy. It was so that your palate would recognize only the taste of the gods."], ["p", "They are the architects of genocide. In the shadows, the Iron Ladies whispered to the Kings and the Gods, giving them “determination.” A determination that led them to self-destruction. They needed the world to be emptied so that only you would remain, the thirsty beast, and they, the only ones who can hold your leash without getting burned."], ["h", "IV. Freya: The Vessel of the Last Scream"], ["p", "And now we come to Freya. The final scab on a millennia-old wound. Do not look at her as a woman; look at her as a walking tomb. Her silver eyes no longer shine; they bleed a thick mercury that marks the path to the divine abodes."], ["p", "She says she doesn’t know how to fight, and that is the most terrifying truth: she doesn’t need to lift a finger when she has by her side a creature that has devoured the sky. Freya does not guide you toward the gods so that you may kill them; she guides you so that she may drink what remains of their agonies. She is the “end of thirst.” When the last god falls and his blood bathes Freya’s silver feet, the Truth that the first Lady discovered will become flesh."], ["p", "What will happen when the last Iron Lady is the only will left in a world of ash? Are you the one protecting her, or is she the one keeping you alive because there is still one last drop of divinity that only you can extract?"], ["c", "The End?"]]}, {"id": "voluntad", "title": "Una voluntad de hierro", "kind": "Registro", "es": [["p", "Cuando nació la Orden de las Damas de Hierro, se creó la leyenda del Alma de Acero, para controlar a los habitantes del nuevo mundo, haciéndoles creer en una deidad imposible que representa la salvación de la raza."], ["p", "Esta no es una deidad, no es un humano, es un enviado de la Orden para mantener el estado de guerra, todos creen que es una deidad bondadosa y salvadora porque nadie vive para contar lo contrario."], ["p", "Durante el pico de la Orden De Las Damas de Hierro la raza humana vivía en completa ignorancia."], ["p", "Durante las guerras sagradas, dónde el Verdugo De Dios, el asesino de Dioses, el Mataor Divino rompió violentamente las fundaciones de todas las razas existentes, dejando solo con vida aquellos que se escondieron, estos siendo tanto humanos, dragones, e incluso dioses."], ["p", "Pero."], ["p", "Al intervenir La Presencia, todo el equilibrio del mundo se rompió a pedazos."], ["p", "Encerrar durante 8 siglos al presunto salvador desmoralizó completamente a la raza humana."], ["p", "La Presencia, por alguna razón, también aplastó a todo ser humano que conocía el verdadero propósito del Hueco."]], "en": null}]}, {"id": "III", "title": "El Verdugo", "blurb": "El elegido, sus guerras y ocho siglos de encierro.", "spoiler": true, "entries": [{"id": "eventos", "title": "Eventos de Iron Souls", "kind": "Cronología", "es": [["h", "Eventos de Iron Souls (1)"], ["p", "En la era dorada del mundo, antes gobernado por facciones, y antes en paz."], ["p", "Una profecía decía, que algún día, un humano, la raza más débil de todas, dotado con la maldición hueca llegaría desde el abismo hasta el mundo de arriba."], ["p", "La era dorada se acabó terminando, las facciones entraron en conflictos para recuperar un objeto divino. Capaz de crear, destruir y controlarlo todo."], ["p", "Cuando tú, un humano, llega al mundo de arriba, todo está devastado, la guerra ha hecho lo suyo, dejando a la mayoría de los poblados sin vida."], ["p", "Pero los líderes de las facciones siguen en pie, y tu único deber es derrotar, masacrar y destrozar a todo dios, semidios o reino que se te cruce por delante."], ["p", "No eres un ser de luz, eres una persona cruel, solo con sed de sangre divina. Al derrotar a semidioses menores, atraes la atención de los altos cargos. Los dioses mismos se encargan de enviarte a los guerreros más poderosos de su mundo."], ["p", "Pero eres más fuerte, incluso si mueres, una y otra vez. Vuelves siempre más fuerte. Y con ese poder desgarras a los guerreros que te enviaron."], ["p", "Sin más opciones, los dioses van en persona a detenerte. Pero te mantienes en pie, ahora sujetando la cabeza de estos en tus manos."], ["p", "Has matado a toda forma de vida divina que quedaba en el mundo, ya no queda nada, solo tú y “La Presencia”. La creadora de todo."], ["p", "Al ver que has destruido su creación, esta estalla en ira y te encierra en una prisión de la que solo podrás salir cuando el poder de La Presencia llegue a su fin."], ["h", "Eventos de The Iron Souls (2)"], ["p", "Despiertas después de un largo letargo, han pasado 8 siglos después de tu encierro en la prisión divina, pero sigues vivo, gracias a la sangre divina derramada y a la maldición del hueco. Es un castigo o una bendición?"], ["p", "Al despertar, no notas presencia divina. Pero una mujer te espera en la entrada. Freya, una Dama de Hierro."], ["p", "Estos seres no son eternos, son humanos, adoctrinados desde temprana edad solo para cumplir con un cometido, ayudar al humano elegido."], ["p", "A cambio de su ayuda, ella solo te pide que le lleves a los hogares divinos que te vayas encontrando. Los lugares donde antes, residían los grandes dioses, los ciudadanos quieren creer, que hace mucho tiempo, un humano elegido los “salvó” de la guerra. Ellos no saben que ese humano eres tú, ni que no paraste la guerra, sino que mataste a todo ser vivo hasta que no haya más nadie con quien pelear."], ["p", "Freya no puede ir a los hogares sola, no tiene destreza en pelea, ya que en esos hogares, todavía hay una probabilidad que resida el dios, debilitado, pero no muerto."], ["p", "Los dioses nunca mueren."], ["p", "¿Porqué La Presencia ya no te afecta? Es una gran pregunta, para esto estáis vosotros, comunidad. La Dama de Hierro y tú visitáis los hogares de dioses, cada uno de ellos, derrotáis juntos a los dioses que quedaban en pie, son más débiles que antaño, pero los notas incluso más fuerte, ya que tu sueño de 8 siglos te ha debilitado considerablemente."], ["p", "El final por razones obvias no lo escribiré aquí, quiero que tengáis la sorpresa al jugar el modpack. Gracias."]], "en": [["h", "Iron Souls Events (1)"], ["p", "In the world’s golden age, once ruled by factions and once at peace."], ["p", "A prophecy foretold that one day, a human—the weakest race of all, afflicted with the Hollow Curse —would emerge from the Abyss into the world above."], ["p", "The golden age came to an end; the factions went to war to recover a divine object capable of creating, destroying, and controlling everything."], ["p", "When you, a human, arrive in the world above, everything is devastated; war has taken its toll, leaving most villages lifeless."], ["p", "But the faction leaders still stand, and your sole duty is to defeat, slaughter, and destroy every god, demigod, or kingdom that crosses your path."], ["p", "You are not a being of light; you are a cruel person, driven only by a thirst for divine blood. By defeating lesser demigods, you attract the attention of the higher-ups. The gods themselves take it upon themselves to send you the most powerful warriors from their world. But you are stronger; even if you die, over and over again, you always return stronger. And with that power, you tear apart the warriors they sent."], ["p", "With no other options, the gods come in person to stop you. But you remain standing, now holding their heads in your hands."], ["p", "You have killed every form of divine life left in the world; there is nothing left, only you and “The Presence.” The creator of all."], ["p", "Seeing that you have destroyed her creation, she explodes in rage and imprisons you in a prison from which you can only escape when the power of The Presence comes to an end."], ["h", "Events of The Iron Souls (2)"], ["p", "You awaken after a long slumber; eight centuries have passed since your confinement in the divine prison, yet you remain alive, thanks to the spilled divine blood and the curse of the void. Is it a punishment or a blessing?"], ["p", "Upon waking, you sense no divine presence. But a woman awaits you at the entrance. Freya, a Lady of Iron."], ["p", "These beings are not immortal; they are humans, indoctrinated from a young age for a single purpose: to assist the chosen human."], ["p", "In exchange for her help, she only asks that you take her to the divine homes you come across. The places where the great gods once resided; the citizens want to believe that, long ago, a chosen human “saved” them from war. They do not know that you are that human, nor that you did not stop the war, but rather that you killed every living being until there was no one left to fight. Freya cannot go to the homes alone; she has no skill in combat, since in those homes, there is still a chance that the god resides there, weakened but not dead."], ["p", "The gods never die."], ["p", "Why does The Presence no longer affect you? That is a great question—that is why you are here, community."], ["p", "The Iron Lady and you visit the homes of the gods, each and every one of them; together, you defeat the gods who remained standing. They are weaker than they once were, but you feel them to be even stronger, since your 8-century slumber has weakened you considerably. For obvious reasons, I won’t write the ending here; I want you to have the surprise when you play the modpack."], ["p", "Thank you."]]}, {"id": "salvacion", "title": "La salvación", "kind": "Monólogo", "tone": "voz tight", "es": [["p", "La muerte es la única salvación en este mundo, derramar sangre es mi único objetivo."], ["p", "Quiero Matar."], ["p", "Quiero Desgarrar."], ["p", "Quiero beber sangre divina."], ["p", "La dorada sangre de los dioses corre bajo mis pies – No pienso, no cuestiono, no hablo, no pregunto."], ["p", "Solo arranco las llamas de vida fuera de esos ojos color oro."], ["p", "No lo disfruto, pero tampoco lo odio."], ["p", "Es mi cometido, por lo que existo."], ["p", "El mundo solo estará en paz cuando no quede nada ni nadie. Cuando todo esté junto en un lago de color rojo bajo mis pies."], ["p", "Soy el verdugo de dios."], ["p", "Soy el salvador de este mundo."], ["p", "La única real deidad."], ["p", "Pero cuando cumpla mi deber, lo único que podré hacer será apagar mi propia llama."], ["p", "No puedo vivir sin un cometido."], ["p", "Mi dama, mi señora madre."], ["p", "¿Qué tengo que hacer ahora?"]], "en": null}]}, {"id": "IV", "title": "Voces de los caídos", "blurb": "Lo que sienten quienes viven bajo La Presencia.", "entries": [{"id": "mundo-diferente", "title": "En un mundo diferente", "kind": "Testimonio", "tone": "voz tight", "es": [["p", "Cuando ella viene, no me queda voz para gritar, instantáneamente siento mis órganos retorcerse bajo una poderosa presencia."], ["p", "Puedo sentir cada costilla crujir."], ["p", "Puedo oír cada músculo desgarrarse."], ["p", "Estoy consciente sin estarlo, siento todo el dolor que sufre mi cuerpo, pero no puedo moverme, estoy en un estado extraño, como si todo mi cuerpo esté sumergido bajo el agua, pero esta se vuelve sólida impidiendo moverme."], ["p", "Me ahogo."], ["p", "Me ahogo sin poder morir."], ["p", "Esta criatura me quiere hacer sufrir."], ["p", "¿Acaso lo disfruta?"], ["p", "Creía que los dioses estaban de nuestro lado, eso es lo que nos contaron..."], ["p", "Ahora estoy aquí, expuesto ante la malicia de una deidad maligna."], ["p", "Pero soy un simple ser humano, podría ser cualquier otro... ¿Así que porqué yo?"], ["p", "¿Porqué quiere verme agonizar así?"], ["p", "¿Qué gana con ello?"], ["p", "Mi mente ya no da para pensar más."], ["p", "Pero no puedo apagar mi cerebro."], ["p", "Este ser va a mantenerme sufriendo por siempre, va a mantenernos sufriendo para siempre."], ["p", "A todos nosotros."], ["p", "Sálvanos, por favor."]], "en": null}, {"id": "otros-ojos", "title": "Otros ojos", "kind": "Testimonio", "tone": "voz tight", "es": [["p", "-¿Porqué?"], ["p", "He visto como destruían cada casa de mi pueblo, como martirizaban a toda mi familia."], ["p", "Pensaba que teníamos buenas defensas, pero un solo hombre consiguió atravesarlas. Y yo, un cobarde, me escondí, no quise asomar la nariz fuera cuando mis compañeros daban su vida para proteger nuestro futuro."], ["p", "Ahora están todos muertos."], ["p", "¿Qué es esto que siento?"], ["p", "Siento un odio terrible hacia ese monstruo, eso es lo que es, es una abominación."], ["p", "Ahora ni siquiera puedo dormir, no me queda nada, ni familia, ni casa, ni pertenencias, y pronto ni siquiera tendré cuerpo ni alma."], ["p", "Ella vendrá por mi."], ["p", "Como lo hizo con los demás que sobrevivieron, los matará de la forma más horrible posible, la cara de los sobrevivientes no quedaban con otra que no es la del terrible sufrimiento y agonía, con sangre por doquier, pero sin ninguna herida."], ["p", "Quedaban reducidos a la nada, simplemente aplastados contra el suelo por una presencia divina."], ["p", "Pero aún si estoy muerto, mataré a ese monstruo, renaceré solo para ello."], ["p", "Por mis hijas, por mi mujer embarazada que no pudieron hacerlo. Lo haré por ellas."]], "en": null}]}, {"id": "V", "title": "El relato", "blurb": "La Edad Dorada: un prólogo y cuatro capítulos.", "spoiler": true, "entries": [{"id": "relato", "title": "La Edad Dorada", "kind": "Relato", "es": [["h", "Prólogo: Origen"], ["p", "En el principio de todo, cuando en el planeta todavía no había nada, nació una raza, una raza que dominaría el mundo por la eternidad."], ["p", "Los dragones."], ["p", "Criaturas gigantescas, no son como cuentan las leyendas, no tienen aspecto de lagarto con alas, eran criaturas con una apariencia que los ojos de un ser humano no podrían entender. Por así decirlo, su apariencia era cósmica."], ["p", "El rey de estos, el rey Fin-Apar, era el dragón más poderosos de todos, que con sangre y lágrimas consiguió colocarse en la cima de la escala."], ["p", "Todos los dragones tenían un enorme respeto hacia él, el mundo estaba en paz."], ["p", "Pero un día, un nuevo ser nació, un ser dotado de una fe y fuerza de voluntad inquebrantable."], ["p", "Los seres humanos."], ["p", "Estos seres eran inteligentes, no lo suficiente para entender la naturaleza de los dragones, pero sí lo suficiente para procrear y realizar grandes avances tecnológicos."], ["p", "Los humanos poco a poco, ocuparon la mayor parte de la tierra, pero los dragones no buscaban la guerra, solo se quedaban de su lado, expectantes."], ["p", "Pero en algún momento esto tenía que pasar, los humanos atravesaron las fronteras de su reino y penetraron en territorio draconiano."], ["p", "Los dragones los miraban con malicia, grandes avispones viendo a una tropa de hormigas entrar en su colmena."], ["p", "Lo que no sabían, es que esa confianza sería lo que los llevarían a su derrota."], ["p", "El rey Fin-Apar se acercó a los humanos, sin intenciones de atacar, solo curioso por ver a la nueva raza."], ["p", "Al entrar en contacto con ellos, sucedió algo que nunca imaginó posible."], ["p", "Su gran corazón latente de sangre draconiana empezó a acelerarse al ver a un ser inferior."], ["p", "Tan débil, tan sensible, pero con un aura tan poderosa al mismo tiempo."], ["p", "El gran rey dragón cayó enamorado a los pies de una humana."], ["p", "Una araña había entrado en el terreno de juego, y el avispón había caído en su tela."], ["p", "Los tiempos pasaron, la humana y el gran rey dragón tuvieron una vida, bajo los ojos descontentos del resto de ambas razas."], ["p", "Ningún humano confiaba en los dragones, ningún dragón confiaba en los humanos."], ["p", "Mientras en un lado se desarrollaba un romance, al otro lado se acercaba una guerra."], ["p", "Y así es como todo cayó todo, ahí es cuando empezó el cataclismo."], ["p", "Los dragones y los humanos, en el intento de matar a los dos amantes, terminaron desquitando su furor en Fin-Apar, que en silencio aguantaba el dolor, con más de una espina clavada en el dorso. Mientras simplemente seguía sonriendo del otro lado."], ["p", "Un día, el gran dragón no aguantó más, tanto tiempo recibiendo dolor constante y sin el valor para dejar a su amada atrás y atacar de vuelta, su corazón se apagó, la última llama de vida escapó de sus ojos."], ["p", "Su amada, al ver su alma dejar el cuerpo inerte, intentó todo para salvarlo, se quedó días calentando al cadáver con su cuerpo, esperando volver a encender esa llama, pero era como encender una casa de concreto con una cerilla mojada, era imposible."], ["p", "Fin-Apar había muerto."], ["p", "Sin soportarlo más, la humana tomó una dura decisión."], ["p", "Si ella no podía estar con su amado en el mundo de los vivos, lo estará en el otro lado."], ["p", "Tomó una afilada cuchilla, y con gran resignar, cortó cada ligamento, vena y hueso de su cuello, dejando caer su cabeza y cuerpo, abrazando a su querido rey en sus últimos instantes de vida, mientras su sangre se mezclaba con la suya."], ["p", "Ahora no quedaba ni rey, ni reina, aunque nunca llegó a serlo. Quizás ahora arden felices en el infierno."], ["p", "Pero eso no terminó ahí."], ["p", "De la mezcla de esas dos sangres, nació un ser."], ["p", "Un ser poderoso, un ser despiadado, nacido de la depresión y del odio que sentían ambos por sus propias razas."], ["p", "Nació una divinidad que cambiaría para siempre el futuro del mundo."], ["p", "Además de eso, nacieron...ellos..."], ["hr"], ["h", "Capítulo 1: Cenizas"], ["p", "He despertado en un lugar que no recuerdo, con mis ojos observando al cielo nublado, solo viendo como unas finas gotas de lluvia acariciaban mi rostro."], ["p", "Al levantarme, noto un dolor terrible en mi cuerpo entero, me toma un tiempo acostumbrarme a la luz, por muy poca que sea, siento como si hubiera estado así por mucho...mucho tiempo."], ["p", "No recuerdo mi nombre, ni lo que hago aquí, y menos lo que ha pasado."], ["p", "Al levantarme y mirar al mi alrededor, mi pulso se acelera."], ["p", "Ya que solo veo una cosa, Destrucción, muerte."], ["p", "Veo restos de casas a mi alrededor, veo cadáveres martirizados, con heridas abiertas que dejaban ver su interior al completo, como si una gran bestia hubiera pasado por aquí destruyendo todo sin razón alguna."], ["p", "Miro las heridas de más cerca, parecen causadas por una espada, también había cadáveres acribillados por flechas, lo que sea que haya pasado por aquí, tenía un enorme arsenal de armas."], ["p", "– ¿Porqué ha hecho esto..? ¿Quién...?"], ["p", "De repente, desde mi interior, recuerdo algo."], ["p", "“Alma de Acero”"], ["p", "– Ese nombre...lo recuerdo...es...un héroe...será...nuestro salvador..."], ["p", "Recuerdo que me lo describieron como un héroe empuñando una gran espada, que luchaba contra todo lo que amenazaba a la raza humana, defendiéndolos con valentía."], ["p", "Recuerdo que alguien me dijo que nunca perdió ni siquiera una batalla, ya que cada vez que moría, este volvía más fuerte todavía, no sé como eso es siquiera posible, pero por alguna razón, pienso que es la única persona que puede salvarnos a los que sobrevivimos de la bestia que destrozó mi pueblo, y probablemente muchos más."], ["p", "También me juro a mi mismo una cosa."], ["p", "“Con la ayuda del Alma de Acero o no, mataré a ese monstruo, mataré al ser que ha causado esto, aunque no recuerdo quienes son estas personas, estoy seguro que tenían familia, estoy seguro que merecían algo mejor que esto. Te encontraré, puta bestia. Y arrancaré tu piel hasta que la vida salga de tu cuerpo.”"], ["p", "No recuerdo quién era mi familia, pero estoy seguro que él también la mató, así que no me torturo en intentar recordar."], ["p", "Sin pensarlo dos veces, recojo los pocos víveres que quedan en la aldea en ruinas, y empiezo a caminar sin rumbo aparente por la gran ruta que lleva hacia el exterior."], ["p", "Echo un último vistazo atrás, y después dejo el odio y la determinación controlar mi cuerpo, ya no soy yo el que se mueve, es mi ira, es mi dolor."], ["hr"], ["h", "Capítulo 2: Otros ojos"], ["p", "Atravesando las tierras encontré otros cadáveres, aunque a duras penas se podían identificar sus cuerpos, estos no parecían haber muerto por el filo de una espada, ni siquiera por algún hechizo, parecen haber sido aplastados con una mano invisible que no deja rastro, dejando sus intestinos esparcidos por el suelo."], ["p", "Al acercarme y tocar lo que parecía ser el cráneo de una víctima, en mi cabeza apareció una imagen."], ["p", "Un hombre, dentro de un líquido oscuro, que parece ser agua, pero con una diferencia, está solidificada sin llegar a ser hielo."], ["p", "Está en mitad de la nada, pero una luz se acerca a él."], ["p", "En el momento dónde esta empieza a imbuirle, el joven empieza a poner cara de agonía, intentaba gritar pero no lo conseguía, no le quedaba voz, intentaba retorcerse e irse, pero no podía moverse. No sentía sus brazos ni sus piernas, era como si no tuviera extremidades, o que su mente no conectaba con su cuerpo."], ["p", "Pasan los minutos, y el humano sigue agonizando, puedo identificar en su cara sus pensamientos, es como si al tocar su cuerpo, o lo que queda de él hubiera podido ver lo que le había sucedido."], ["p", "“Mátame, por favor, no me dejes sufrir más.” Oigo que piensa el hombre."], ["p", "Así que esto es lo que hacen los dioses."], ["p", "¿Qué tienen todos en común los humanos que sufrieron esta tortura...?"], ["p", "Me despierto acostado encima de los restos orgánicos del hombre, con la cara manchada de la sangre que quedaba en el suelo."], ["p", "Estaba fría, este hombre había muerto hace mucho tiempo."], ["hr"], ["h", "Capítulo 3: Mentiras"], ["p", "Mientras sigo avanzando hacia un destino sin nombre. Vagando por las tierras doradas, que hace mucho estaban pobladas por un montón de personas, felices y sonrientes, me encuentro con unas ruinas que llaman mi atención."], ["p", "Parece una torre, es antigua...sí...muy antigua, tiene moho subiendo por las paredes y enredaderas en las rocas de las que está construida."], ["p", "Pongo un pie adentro, mi peso resuena en toda la sala. Consigo ver un cajón al final de la sala, y por alguna razón, siento que me llama."], ["p", "Quiere que lo abra."], ["p", "Al acercarme, puedo apreciar con más detalle lo que tengo delante."], ["p", "Una mesa, llena de libros, papeles, con dibujos de un hombre. Un hombre de piel gris, que parece llevar una armadura. No puedo vislumbrar su rostro, pero sé que es alguien poderoso."], ["p", "Abro el cajón y veo un pequeño libro."], ["p", "El título dice."], ["p", "“La Leyenda del Verdugo.”"], ["p", "Al abrir el libro, empiezo a leer."], ["p", "Los textos están escrito con tinta rojiza, y relatan la leyenda del Alma De Acero, la leyenda que había recordado al despertar. Era idéntica, parece que los que habitaban esta zona idolatraban en sobremanera a este figura."], ["p", "El relato lo describe como el héroe de la Salvación, el que salvaría a la raza humana de la destrucción."], ["p", "El ser que consiguió alcanzar el poder de una divinidad, el que derrotó a todos los dioses y seres superiores hace mucho tiempo, el que nos salvó de su control."], ["p", "Mi respeto por este ser no deja de crecer, empiezo a sentir hasta un cierto punto admiración hacia él."], ["p", "Con mucha delicadeza, cierro el libro y lo guardo en mi gran mochila."], ["p", "Desde ese día, leo una o dos páginas del manuscrito cada noche, con ganas crecientes de encontrar a ese héroe, y de juntos poder derrotar al monstruo que destruyó mi hogar."], ["hr"], ["h", "Capítulo 4: Verdad"], ["p", "Al despertar ese día huelo algo que me alerta, huelo humo. A lo lejos puedo ver una gran columna de humo negro elevarse hacia el cielo. Y el sonido de una campana resonar en la lejanía."], ["p", "Ese pueblo se está quemando, está siendo atacado por algo...O alguien..."], ["p", "– Es él... – Pienso para mi mismo, estoy tan cerca del que masacró a mis compañeros. ¿Podré con él yo solo, sin la ayuda del Alma de Acero?"], ["p", "Ahora mismo todo me da igual, la rabia y la venganza empiezan a mover mi cuerpo, y sin siquiera recoger mis cosas, empiezo a avanzar rápidamente hacia el pueblo."], ["hr"], ["p", "Al llegar a las puertas de este, observo."], ["p", "Me encuentro en Norgham, un pueblo pequeño, que seguramente se dedicaba al comercio de algunas especias...o algo parecido..."], ["p", "Al poner un pie adentro, puedo ver la imagen de mi pueblo plasmada en el escenario."], ["p", "Cadáveres, demasiados cadáveres."], ["p", "Con los mismos cortes, tuvieron la misma muerte."], ["p", "En una esquina de la calle, veo a una mujer, con el cuerpo quemado, que todavía respira."], ["p", "Discretamente, me acerco a ella, su pulso es débil, no le queda mucho tiempo, pero aún así tengo el valor de preguntar."], ["p", "– ¿Qué ha pasado aquí? – Digo arrodillándome delante de ella, mirando el único ojo que le queda."], ["p", "La mujer levanta a duras penas la cabeza, y responde con una voz dolida."], ["p", "– Deberías irte...cof cof...aquí...ha pasado un monstruo...cof...nos contaron su leyenda...pensábamos que era un salvador...que nos iba a librar de la muerte...cof...pero él...él no es más que un enviado de los dioses para torturarnos...le abrimos nuestras puertas con sonrisas...cof...y mira como nos deja... – Se toma un momento para respirar."], ["p", "– Pero...¿Quién...? ¿De quién está hablando?... – Aunque intuyo la respuesta, pregunto, aunque espero equivocarme. Mi pulso se acelera, pero ya no es rabia, es traición, me siento traicionado."], ["p", "– Es él...cof...el Alma de Acero..."], ["p", "Mi mundo se desmorona, ahora mismo mi mente está en otro lugar, no sé muy bien qué pensar."], ["p", "¿Debería creerle? Se puede haber equivocado...o...me está mintiendo..."], ["p", "No. No se puede ser tan específico con una mentira. Ella sabe su nombre, y al pronunciarlo sus ojos brillan con terror."], ["p", "Sin ánimos, pero sí el sentimiento de traición transformándose en fuerza bruta, mis ojos se encienden, y camino hasta el final de la calle, dónde veo una figura."], ["p", "La figura dejaba un rastro de sangre por el suelo al caminar, no conseguía apreciar su cara, pero era muy obvio de quién era."], ["p", "Era idéntico a la ilustración del libro."], ["p", "Es él."], ["p", "Es el alma de acero."], ["p", "Al escuchar mis pasos, este se da la vuelta, puedo observar con claridad una cabeza que este está sujetando, probablemente de un hombre que intentó defenderse."], ["p", "Sin esperar, y con una rabia infinita, corro hacia él y suelto toda la fuerza que tengo en un solo golpe."], ["p", "Este simplemente consigue esquivarlo con facilidad."], ["p", "Claro, soy idiota, ¿como he pensado que podría ganarle...?"], ["p", "Aún así, empieza una gran pelea, la experiencia que he ido adquiriendo en mi viaje se nota en la velocidad de mis movimientos y en la fuerza de mis ataques."], ["p", "He mejorado mis armas, llevo una bella armadura."], ["p", "Me sorprendo al derrotarlo, ha sido una pelea dura, que ha durado varias horas, pero he conseguido derrotarlo."], ["p", "¿Debería celebrar o sentirme peor todavía?"], ["p", "He matado al héroe que llevo tanto tiempo admirando."], ["p", "Pero sigue habiendo una espina en mi corazón."], ["p", "Sé que de alguna forma, el monstruo conseguirá volver."], ["p", "Porque me sé la leyenda."], ["p", "El Alma De Acero nunca muere de verdad, y cada vez que este es acabado, vuelve más fuerte todavía."], ["p", "Pero yo solo soy un humano, no puedo vivir para ver su siguiente aparición."], ["p", "Con gran pesar, tengo que dejar esto para las generaciones que vendrán después, y pensar que alguien, tendrá la suficiente fuerza para acabar con él."], ["p", "Pero de momento...siento una paz que nunca antes había sentido, aunque al mismo tiempo siento un gran vacío."], ["p", "¿Qué hago ahora?"], ["c", "FIN."], ["c", "Escrito por TomyStacks."], ["c", "Gracias por leer."]], "en": null}]}]</script>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><h3>Contacto</h3><a href="#contacto">Escríbenos</a></div>
+    <div><h3>Proyecto</h3><a href="#modpack">Iron Souls Overlords</a><a href="https://modrinth.com/modpack/iron-souls-overlords" target="_blank" rel="noopener">Modrinth</a></div>
+    <div><h3>Redes</h3><a href="https://www.youtube.com/@itstomystacks" target="_blank" rel="noopener">YouTube</a><a href="https://www.patreon.com/cw/ironsoulstm" target="_blank" rel="noopener">Patreon</a><a href="https://discord.gg/HzsB5FZGpN" target="_blank" rel="noopener">Discord</a></div>
+  </div>
+  <p class="copy">2026 Iron Souls™. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+document.getElementById('f').addEventListener('submit',function(e){
+  e.preventDefault();
+  var f=this,ok=document.getElementById('ok'),b=f.querySelector('button');
+  b.disabled=true;b.textContent='Enviando…';ok.style.display='none';
+  fetch('https://formsubmit.co/ajax/33tommyjerry22@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(f)})
+  .then(function(r){if(!r.ok)throw 0;return r.json()})
+  .then(function(){ok.textContent='Mensaje enviado. Te responderemos pronto.';ok.style.display='block';f.reset()})
+  .catch(function(){ok.textContent='No se pudo enviar. Inténtalo de nuevo en un rato.';ok.style.display='block'})
+  .finally(function(){b.disabled=false;b.textContent='Enviar'});
+});
+
+(function(){
+  var t=document.getElementById('track'),d=document.getElementById('dots'),bar=document.getElementById('bar');
+  var real=[].slice.call(t.children),n=real.length;
+  var cf=real[0].cloneNode(true),cl=real[n-1].cloneNode(true);
+  cf.setAttribute('aria-hidden','true');cl.setAttribute('aria-hidden','true');
+  t.insertBefore(cl,real[0]);t.appendChild(cf);
+  var sl=[].slice.call(t.children),pos=1,busy=false,hold=false,timer;
+  var reduce=false,paused=false,TIME=5000,DUR=950;
+  function put(p){t.style.transform='translateX('+(-p*100)+'%)'}
+  function jump(p){t.classList.add('drag');put(p);void t.offsetWidth;t.classList.remove('drag')}
+  for(var k=0;k<n;k++){(function(k){var b=document.createElement('button');b.setAttribute('aria-label','Ir a la diapositiva '+(k+1));b.onclick=function(){to(k+1)};d.appendChild(b)})(k)}
+  function mark(){
+    var cur=(pos-1+n)%n;
+    [].forEach.call(d.children,function(b,j){b.setAttribute('aria-current',j===cur)});
+    sl.forEach(function(s,j){s.classList.toggle('on',j===pos||(pos===0&&j===n)||(pos===n+1&&j===1))});
+  }
+  function done(){
+    busy=false;
+    if(pos===0){pos=n;jump(pos)}else if(pos===n+1){pos=1;jump(pos)}
+    mark();
+  }
+  function to(p){
+    if(busy||p===pos)return;
+    busy=true;pos=p;put(p);mark();restart();
+    setTimeout(done,reduce?0:DUR);
+  }
+  function restart(){
+    clearInterval(timer);bar.classList.remove('run');bar.style.width='0';
+    if(reduce||hold||paused)return;
+    void bar.offsetWidth;bar.style.width='';bar.classList.add('run');
+    timer=setInterval(function(){to(pos+1)},TIME);
+  }
+  document.querySelector('.prev').onclick=function(){to(pos-1)};
+  document.querySelector('.next').onclick=function(){to(pos+1)};
+  var sx=null,dx=0;
+  t.addEventListener('pointerdown',function(e){if(busy||e.target.closest('a'))return;sx=e.clientX;dx=0;t.classList.add('drag')});
+  window.addEventListener('pointermove',function(e){if(sx===null)return;dx=e.clientX-sx;t.style.transform='translateX(calc('+(-pos*100)+'% + '+dx+'px))'});
+  window.addEventListener('pointerup',function(){
+    if(sx===null)return;
+    var w=t.clientWidth,m=dx;sx=null;t.classList.remove('drag');
+    if(m<-w*.15)to(pos+1);else if(m>w*.15)to(pos-1);else{put(pos);restart()}
+  });
+  var s=document.querySelector('.slider');
+  s.addEventListener('pointerenter',function(e){if(e.pointerType!=='mouse')return;hold=true;restart()});
+  s.addEventListener('pointerleave',function(e){if(e.pointerType!=='mouse')return;hold=false;restart()});
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)restart()});
+  t.addEventListener('dragstart',function(e){e.preventDefault()});
+  document.getElementById('pb').onclick=function(){paused=!paused;this.textContent=paused?'▶':'❚❚';this.setAttribute('aria-label',paused?'Reanudar el carrusel':'Pausar el carrusel');restart()};
+  jump(pos);mark();restart();
+})();
+
+(function(){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
+  [].forEach.call(document.querySelectorAll('.rv'),function(el){io.observe(el)});
+  var links=[].slice.call(document.querySelectorAll('#menu a')),secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))});
+  var sp=document.getElementById('sp'),hd=document.getElementById('top'),tick=false;
+  function upd(){
+    var y=window.scrollY,mx=document.documentElement.scrollHeight-innerHeight;
+    if(y>110)hd.classList.add('small');else if(y<30)hd.classList.remove('small');sp.style.transform='scaleX('+(mx>0?y/mx:0)+')';
+    var cur=-1;secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<innerHeight*.4)cur=i});
+    links.forEach(function(a,i){a.classList.toggle('act',i===cur)});tick=false
+  }
+  addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(upd)}},{passive:true});upd();
+  var art=document.getElementById('art'),pk=art.parentNode;
+  pk.addEventListener('pointermove',function(e){if(e.pointerType!=='mouse')return;var r=pk.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;art.style.transform='perspective(700px) rotateY('+x*8+'deg) rotateX('+(-y*8)+'deg) scale(1.03)'});
+  pk.addEventListener('pointerleave',function(){art.style.transform=''});
+})();
+
+(function(){
+  var hd=document.getElementById('top'),btn=document.getElementById('menubtn'),sc=document.getElementById('scrim'),dr=document.getElementById('drop'),lbl=btn.querySelector('.lbl'),y0=0;
+  function set(o){
+    hd.classList.toggle('open',o);
+    document.documentElement.classList.toggle('menu-open',o);
+    btn.setAttribute('aria-expanded',o?'true':'false');
+    btn.setAttribute('aria-label',o?'Cerrar menú':'Abrir menú');
+    lbl.textContent=o?'Cerrar':'Menú';
+    if(o)y0=window.scrollY;
+  }
+  btn.addEventListener('click',function(){set(!hd.classList.contains('open'))});
+  sc.addEventListener('click',function(){set(false)});
+  dr.addEventListener('click',function(e){if(e.target.closest('a'))set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&hd.classList.contains('open')){set(false);btn.focus()}});
+  addEventListener('scroll',function(){if(hd.classList.contains('open')&&Math.abs(window.scrollY-y0)>160)set(false)},{passive:true});
+})();
+
+(function(){
+  var data=JSON.parse(document.getElementById('loredata').textContent),flat=[],lang='es',cur=0;
+  data.forEach(function(pt){pt.entries.forEach(function(e){e.part=pt;flat.push(e)})});
+  var det=document.getElementById('lnav'),list=document.getElementById('lnavlist'),rd=document.getElementById('lread'),lc=document.getElementById('lcur');
+  var mq=window.matchMedia('(max-width:860px)');
+  function el(t,c,x){var n=document.createElement(t);if(c)n.className=c;if(x!=null)n.textContent=x;return n}
+  data.forEach(function(pt){
+    var g=el('div','lpart'),h=el('h4');h.appendChild(el('span',null,pt.id));h.appendChild(el('b',null,pt.title));h.lastChild.style.fontWeight='400';g.appendChild(h);
+    pt.entries.forEach(function(e){var b=el('button',null,e.title);b.type='button';b.dataset.id=e.id;b.onclick=function(){show(e.id,true)};g.appendChild(b)});
+    list.appendChild(g);
+  });
+  function syncNav(){if(!mq.matches)det.open=true}
+  det.querySelector('summary').addEventListener('click',function(ev){if(!mq.matches)ev.preventDefault()});
+  (mq.addEventListener?mq.addEventListener('change',function(){det.open=!mq.matches}):mq.addListener(function(){det.open=!mq.matches}));
+  det.open=!mq.matches;
+  function show(id,user){
+    var i=flat.findIndex(function(e){return e.id===id});if(i<0)i=0;cur=i;
+    var e=flat[i],pt=e.part,l=(lang==='en'&&e.en)?'en':'es',bl=e[l],tone=e.tone||'';
+    [].forEach.call(list.querySelectorAll('button'),function(b){b.setAttribute('aria-current',b.dataset.id===e.id)});
+    lc.textContent=e.title;
+    rd.textContent='';
+    var head=el('div','lhead'),box=el('div');
+    box.appendChild(el('p','lpath','Parte '+pt.id+': '+pt.title));
+    box.appendChild(el('h4','ltitle',e.title));
+    box.appendChild(el('span','lkind',e.kind));
+    head.appendChild(box);
+    var tg=el('div','llang');tg.setAttribute('role','group');tg.setAttribute('aria-label','Idioma del texto');
+    [['es','ES'],['en','EN']].forEach(function(p){
+      var b=el('button',null,p[1]);b.type='button';b.setAttribute('aria-pressed',l===p[0]);
+      if(p[0]==='en'&&!e.en){b.disabled=true;b.title='Todavía no hay traducción de este texto'}
+      b.onclick=function(){lang=p[0];show(e.id,false)};tg.appendChild(b);
+    });
+    head.appendChild(tg);rd.appendChild(head);
+    if(!e.en)rd.appendChild(el('p','lnote','Este texto solo existe en español por ahora.'));
+    if(pt.spoiler)rd.appendChild(el('p','lwarn','Aviso: este texto cuenta partes importantes de la historia.'));
+    var tx=el('div','ltext '+tone),first=true;
+    bl.forEach(function(b,k){
+      var t=b[0],n;
+      if(t==='hr'){if(bl[k+1]&&bl[k+1][0]==='h')return;n=el('div','lhr');n.setAttribute('aria-hidden','true');n.innerHTML='<i></i><i></i><i></i>'}
+      else if(t==='h')n=el('h5',null,b[1]);
+      else if(t==='sub')n=el('p','lsub',b[1]);
+      else if(t==='c')n=el('p','lc',b[1]);
+      else{n=el('p',null,b[1]);if(first&&!tone&&/^[A-Za-zÁÉÍÓÚÑáéíóúñ]/.test(b[1]))n.className='cap1';first=false}
+      tx.appendChild(n);
+    });
+    rd.appendChild(tx);
+    var pg=el('div','lpager');pg.setAttribute('role','navigation');pg.setAttribute('aria-label','Navegación entre textos');
+    if(i>0){var a=el('button','btn alt');a.appendChild(el('small',null,'Anterior'));a.appendChild(el('span',null,flat[i-1].title));a.type='button';a.onclick=function(){show(flat[i-1].id,true)};pg.appendChild(a)}
+    if(i<flat.length-1){var c=el('button','btn alt');c.appendChild(el('small',null,'Siguiente'));c.appendChild(el('span',null,flat[i+1].title));c.type='button';c.onclick=function(){show(flat[i+1].id,true)};pg.appendChild(c)}
+    rd.appendChild(pg);
+    if(user){
+      try{history.replaceState(null,'','#lore-'+e.id)}catch(x){}
+      if(mq.matches)det.open=false;
+      if(rd.getBoundingClientRect().top<80)rd.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  }
+  var box=document.getElementById('lore'),card=document.getElementById('lorecard'),tag=card.querySelector('.wlive');
+  function toggle(on,go){
+    box.hidden=!on;card.setAttribute('aria-expanded',on);tag.textContent=on?'Abierto':'Disponible';
+    if(!go)return;
+    if(on)box.scrollIntoView({behavior:'smooth',block:'start'});
+    else{try{history.replaceState(null,'','#wiki')}catch(x){}card.scrollIntoView({behavior:'smooth',block:'center'})}
+  }
+  card.addEventListener('click',function(ev){ev.preventDefault();toggle(box.hidden,true)});
+  [].forEach.call(document.querySelectorAll('.lclose'),function(b){b.onclick=function(){toggle(false,true)}});
+  var h=(location.hash||'').match(/^#lore(?:-([\w-]+))?$/);
+  show(h&&h[1]?h[1]:flat[0].id,false);
+  if(h){toggle(true,false);setTimeout(function(){box.scrollIntoView()},60)}
+})();
+</script>
+</body>
+</html>
