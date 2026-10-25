@@ -423,11 +423,11 @@ a.wcard[aria-expanded="true"]{border-color:var(--gold);box-shadow:8px 8px 0 var(
 <section id="contacto" class="rv-wrap"><div class="wrap">
   <h2>¿Necesitas ayuda?</h2>
   <p style="max-width:56ch;color:var(--muted);margin:-8px 0 24px">Escribe tu correo, elige una categoría y cuéntanos qué te pasa. Te responderemos pronto.</p>
-  <form id="f" action="https://formsubmit.co/33tommyjerry22@gmail.com" method="POST">
-    <input type="hidden" name="_subject" value="Nuevo mensaje desde la web">
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_template" value="table">
-    <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+  <form id="f" action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value="10e03f31-8c9e-4323-88c5-6e8b3c2d4c6e">
+    <input type="hidden" name="subject" value="Nuevo mensaje desde la web de Iron Souls">
+    <input type="hidden" name="from_name" value="Web Iron Souls">
+    <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
     <label>Correo electrónico *<input type="email" name="email" required autocomplete="email"></label>
     <label>Tipo de consulta *
       <select name="tipo" required><option value="">Elige una opción</option><option>Sugerencias</option><option>Soporte técnico</option><option>Problemas con un proyecto</option><option>Pagos y facturación</option><option>Otra consulta</option></select>
@@ -455,7 +455,7 @@ document.getElementById('f').addEventListener('submit',function(e){
   e.preventDefault();
   var f=this,ok=document.getElementById('ok'),b=f.querySelector('button');
   b.disabled=true;b.textContent='Enviando…';ok.style.display='none';
-  fetch('https://formsubmit.co/ajax/33tommyjerry22@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(f)})
+  fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(f)})
   .then(function(r){return r.json().catch(function(){return {}}).then(function(j){return {ok:r.ok,j:j}})})
   .then(function(x){
     if(x.ok&&String(x.j.success)!=='false'){ok.textContent='Mensaje enviado. Te responderemos pronto.';f.reset()}
